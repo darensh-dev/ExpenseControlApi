@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().ToTable("users");
-        modelBuilder.Entity<User>().Property(u => u.ID).HasColumnName("ID");
+        modelBuilder.Entity<User>().Property(u => u.Id).HasColumnName("ID");
         modelBuilder.Entity<User>().Property(u => u.Username).HasColumnName("username");
         modelBuilder.Entity<User>().Property(u => u.Password).HasColumnName("password");
         modelBuilder.Entity<User>().Property(u => u.CreatedAt).HasColumnName("created_at");

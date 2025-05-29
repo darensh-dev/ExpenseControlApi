@@ -1,11 +1,10 @@
 using ExpenseControlApi.Application.DTOs;
-using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Services;
 
-public class UserService : IUserService
+public class UserService
 {
     private readonly AppDbContext _context;
 
@@ -14,14 +13,15 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
+    public async Task<List<UserDto>> GetAllUsersAsync()
     {
         return await _context.Users
             .Select(u => new UserDto
             {
-                ID = u.ID,
+                Id = u.Id,
                 Username = u.Username,
-                CreatedAt = u.CreatedAt
+                CreatedAt = u.CreatedAt,
+                RegisterState = u.RegisterState
             })
             .ToListAsync();
     }

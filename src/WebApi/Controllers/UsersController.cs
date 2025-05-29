@@ -1,5 +1,5 @@
+using ExpenseControlApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using ExpenseControlApi.Application.Interfaces;
 
 namespace ExpenseControlApi.WebApi.Controllers;
 
@@ -7,15 +7,15 @@ namespace ExpenseControlApi.WebApi.Controllers;
 [Route("api/v1/users")]
 public class UsersController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly UserService _userService;
 
-    public UsersController(IUserService userService)
+    public UsersController(UserService userService)
     {
         _userService = userService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUsers()
+    public async Task<IActionResult> GetAll()
     {
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);

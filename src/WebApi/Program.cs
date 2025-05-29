@@ -1,4 +1,6 @@
 using ExpenseControlApi.Infrastructure.Data;
+using ExpenseControlApi.Services;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Aquí puedes registrar tus servicios si los tienes
 // builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<UserService>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
