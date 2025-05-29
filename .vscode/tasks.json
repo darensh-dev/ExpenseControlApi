@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "dotnet",
+			"task": "watch ExpenseControlApi",
+			"file": "/home/dash/Projects/PruebasTecnicas/smartbiterp/ExpenseControlApi/ExpenseControlApi.csproj",
+			"problemMatcher": [],
+			"label": "dotnet: watch ExpenseControlApi"
+		}
+	]
+}
