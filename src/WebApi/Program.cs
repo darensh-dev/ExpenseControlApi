@@ -1,5 +1,8 @@
 using ExpenseControlApi.Infrastructure.Data;
+using ExpenseControlApi.Infrastructure.Repositories;
+using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Services;
+
 
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Aquí puedes registrar tus servicios si los tienes
 // builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserService>();
 var app = builder.Build();
 
