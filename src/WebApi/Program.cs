@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddControllers(); // <== ¡Importante!
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -31,8 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization(); // <== Esto también es importante si tienes auth
+app.UseAuthorization();
 
-app.MapControllers(); // <== ¡Necesario para mapear tus [ApiController]!
+app.MapControllers();
 
 app.Run();
