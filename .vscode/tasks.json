@@ -1,12 +1,25 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "dotnet",
-			"task": "watch ExpenseControlApi",
-			"file": "/home/dash/Projects/PruebasTecnicas/smartbiterp/ExpenseControlApi/ExpenseControlApi.csproj",
-			"problemMatcher": [],
-			"label": "dotnet: watch ExpenseControlApi"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dotnet watch run",
+      "type": "shell",
+      "command": "dotnet watch run --project ${workspaceFolder}/ExpenseControlApi/ExpenseControlApi.csproj",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "msbuild",
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "dotnet watch",
+          "endsPattern": "Now listening on:"
+        }
+      }
+    }
+  ]
 }

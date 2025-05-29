@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to .NET Core",
+      "name": "Attach to dotnet watch process",
       "type": "coreclr",
       "request": "attach",
       "processId": "${command:pickProcess}"

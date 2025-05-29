@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
 
-    [HttpPost("register")]
+    [HttpPost]
     public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
     {
         try
