@@ -1,5 +1,7 @@
 using ExpenseControlApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using ExpenseControlApi.Application.DTOs;
+using ExpenseControlApi.Infrastructure.Repositories;
 
 namespace ExpenseControlApi.WebApi.Controllers;
 
@@ -19,5 +21,19 @@ public class UsersController : ControllerBase
     {
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);
+    }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
+    {
+        try
+        {
+            await _userService.RegisterAsync(dto);
+            return Ok(new { message = "User registered successfully" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
     }
 }
