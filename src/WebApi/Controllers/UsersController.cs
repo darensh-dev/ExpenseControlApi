@@ -27,7 +27,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
+    public async Task<IActionResult> Register([FromBody] UserCreateDto dto)
     {
         try
         {

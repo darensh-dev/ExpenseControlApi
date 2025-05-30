@@ -44,6 +44,7 @@
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
+      // "requireExactSource": false,
       "serverReadyAction": {
         "action": "openExternally",
         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"

@@ -27,7 +27,7 @@ public class UserService : IUserService
         }).ToList();
     }
 
-    public async Task RegisterAsync(UserRegisterDto dto)
+    public async Task RegisterAsync(UserCreateDto dto)
     {
         var existing = await _userRepository.GetByUsernameAsync(dto.Username);
         if (existing != null)

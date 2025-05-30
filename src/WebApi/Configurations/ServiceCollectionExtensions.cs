@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<TokenService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+        services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
         // services.AddScoped<ExpenseService>();
         // ...
 
@@ -23,6 +24,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ILoginLogRepository, LoginLogRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IDocumentTypeRepository, DocumentTypeRepository>();
+        services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
         // services.AddScoped<IExpenseRepository, ExpenseRepository>();
         // ...
 

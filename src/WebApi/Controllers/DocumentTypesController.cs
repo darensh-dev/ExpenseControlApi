@@ -6,7 +6,6 @@ using System.Security.Claims;
 namespace ExpenseControlApi.WebApi.Controllers;
 
 
-[Authorize]
 [ApiController]
 [Route("api/v1/document-types")]
 public class DocumentTypesController : ControllerBase
