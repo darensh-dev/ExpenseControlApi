@@ -6,7 +6,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class AttachmentService : IAttachmentService
+public class AttachmentService // : IAttachmentService
 {
     private readonly IAttachmentRepository _repository;
 

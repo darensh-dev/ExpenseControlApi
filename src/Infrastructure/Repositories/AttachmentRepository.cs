@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
-public class AttachmentRepository : IAttachmentRepository
+public class AttachmentRepository // : IAttachmentRepository
 {
     private readonly AppDbContext _context;
 

@@ -7,7 +7,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class AuditLogService : IAuditLogService
+public class AuditLogService  //: IAuditLogService
 {
     private readonly IAuditLogRepository _repository;
 

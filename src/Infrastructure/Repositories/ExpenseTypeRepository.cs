@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
-public class ExpenseTypeRepository : IExpenseTypeRepository
+public class ExpenseTypeRepository // : IExpenseTypeRepository
 {
     private readonly AppDbContext _context;
 

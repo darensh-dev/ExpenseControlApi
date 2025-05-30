@@ -7,7 +7,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class ExpenseDetailService : IExpenseDetailService
+public class ExpenseDetailService // : IExpenseDetailService
 {
     private readonly IExpenseDetailRepository _repository;
 

@@ -7,7 +7,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class DepositService : IDepositService
+public class DepositService // : IDepositService
 {
     private readonly IDepositRepository _repository;
 

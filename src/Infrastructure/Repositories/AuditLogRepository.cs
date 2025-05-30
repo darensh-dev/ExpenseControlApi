@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
-public class AuditLogRepository : IAuditLogRepository
+public class AuditLogRepository // : IAuditLogRepository
 {
     private readonly AppDbContext _context;
 

@@ -7,7 +7,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class MonetaryFundService : IMonetaryFundService
+public class MonetaryFundService // : IMonetaryFundService
 {
     private readonly IMonetaryFundRepository _repository;
 

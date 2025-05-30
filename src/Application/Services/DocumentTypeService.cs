@@ -7,7 +7,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class DocumentTypeService : IDocumentTypeService
+public class DocumentTypeService // : IDocumentTypeService
 {
     private readonly IDocumentTypeRepository _repository;
 
