@@ -1,8 +1,9 @@
 // Archivo: src/Application/Services/AuditLogService.cs
 // Requiere: AuditLogDto, AuditLogCreateDto, AuditLogUpdateDto en Application/DTOs
 using ExpenseControlApi.Application.DTOs;
-using ExpenseControlApi.Application.Interfaces.Repositories;
-using ExpenseControlApi.Application.Interfaces.Services;
+// using ExpenseControlApi.Application.Interfaces.Repositories;
+// using ExpenseControlApi.Application.Interfaces.Services
+using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;

@@ -1,8 +1,9 @@
 // Archivo: src/Application/Services/ExpenseTypeService.cs
 // Requiere: ExpenseTypeDto, ExpenseTypeCreateDto, ExpenseTypeUpdateDto en Application/DTOs
 using ExpenseControlApi.Application.DTOs;
-using ExpenseControlApi.Application.Interfaces.Repositories;
-using ExpenseControlApi.Application.Interfaces.Services;
+// using ExpenseControlApi.Application.Interfaces.Repositories;
+// using ExpenseControlApi.Application.Interfaces.Services
+using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
