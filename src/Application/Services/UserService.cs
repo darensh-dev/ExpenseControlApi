@@ -22,7 +22,6 @@ public class UserService
             Id = u.Id,
             Username = u.Username,
             CreatedAt = u.CreatedAt,
-            RegisterState = u.RegisterState
         }).ToList();
     }
 
@@ -38,9 +37,6 @@ public class UserService
         {
             Username = dto.Username,
             Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow,
-            RegisterState = 1
         };
 
         await _userRepository.AddAsync(user);

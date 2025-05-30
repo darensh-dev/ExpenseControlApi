@@ -7,14 +7,26 @@ namespace ExpenseControlApi.Infrastructure.Data.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<User> entity)
     {
-        builder.ToTable("users");
-        builder.Property(u => u.Id).HasColumnName("ID");
-        builder.Property(u => u.Username).HasColumnName("username");
-        builder.Property(u => u.Password).HasColumnName("password");
-        builder.Property(u => u.CreatedAt).HasColumnName("created_at");
-        builder.Property(u => u.UpdatedAt).HasColumnName("updated_at");
-        builder.Property(u => u.RegisterState).HasColumnName("register_state");
+        entity.HasKey(e => e.Id).HasName("users__pk");
+
+        entity.ToTable("users");
+
+        entity.Property(e => e.Id).HasColumnName("id");
+        entity.Property(e => e.CreatedAt)
+            .HasDefaultValueSql("(getdate())")
+            .HasColumnType("datetime")
+            .HasColumnName("created_at");
+        entity.Property(e => e.DeletedAt)
+            .HasColumnType("datetime")
+            .HasColumnName("deleted_at");
+        entity.Property(e => e.Password).HasColumnName("password");
+        entity.Property(e => e.UpdatedAt)
+            .HasColumnType("datetime")
+            .HasColumnName("updated_at");
+        entity.Property(e => e.Username)
+            .HasMaxLength(150)
+            .HasColumnName("username");
     }
 }
