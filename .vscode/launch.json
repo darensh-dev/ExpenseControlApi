@@ -3,10 +3,37 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to dotnet watch process",
+      "type": "DotNetAutoAttach",
+      "request": "launch",
+      "name": ".NET Core Watch",
+      "args": [],
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Launch with Watch",
       "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickProcess}"
+      "request": "launch",
+      "program": "dotnet",
+      "args": [
+        "watch",
+        "run",
+        // "--project",
+        // "${workspaceFolder}/ExpenseControlApi/ExpenseControlApi.csproj"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Attach to dotnet",
+      "type": "coreclr",
+      "request": "attach"
+      //   "processId": "${command:pickProcess}"
     },
     {
       "name": "Launch API",
