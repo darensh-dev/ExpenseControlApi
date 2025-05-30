@@ -1,4 +1,4 @@
-// Data/AppDbContext.cs
+// src/Infrastructure/Data/AppDbContext.cs
 using Microsoft.EntityFrameworkCore;
 using ExpenseControlApi.Domain.Entities;
 

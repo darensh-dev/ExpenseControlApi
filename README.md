@@ -69,3 +69,6 @@ dotnet test
 
 ## Help
 To learn more about the template go to the [project website](https://github.com/jasontaylordev/CleanArchitecture). Here you can find additional guidance, request new features, report a bug, and discuss the template with other users.
+
+
+dotnet ef dbcontext scaffold "Server=localhost;Database=expense_control;User Id=sa;Password=1StrongPwd*1;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --schema dbo --force 
