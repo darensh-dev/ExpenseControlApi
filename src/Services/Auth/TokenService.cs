@@ -21,7 +21,6 @@ namespace ExpenseControlApi.Services.Auth
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username)
-                // Puedes agregar más claims aquí si es necesario
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
