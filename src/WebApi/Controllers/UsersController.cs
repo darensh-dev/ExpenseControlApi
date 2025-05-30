@@ -1,6 +1,7 @@
 using ExpenseControlApi.Application.Services;
-using Microsoft.AspNetCore.Mvc;
 using ExpenseControlApi.Application.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExpenseControlApi.WebApi.Controllers;
 
@@ -15,6 +16,7 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
