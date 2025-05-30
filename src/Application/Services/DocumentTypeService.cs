@@ -14,8 +14,8 @@ public class DocumentTypeService : IDocumentTypeService
         _repository = repository;
     }
 
-    public async Task<List<DocumentTypeDto>> GetAllAsync () {
-        var DocumentType = await _repository.GetAllAsync();
+    public async Task<List<DocumentTypeDto>> GetAllAsync (long currentUserId) {
+        var DocumentType = await _repository.GetAllAsync(currentUserId);
         return DocumentType.Select(dt => new DocumentTypeDto
         {
             Id = dt.Id,

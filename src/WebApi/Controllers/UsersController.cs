@@ -20,6 +20,8 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        var userId = User.FindFirst("sub")?.Value;
+        Console.WriteLine(userId);
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);
     }

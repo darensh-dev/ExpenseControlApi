@@ -26,7 +26,6 @@ public class AttachmentService // : IAttachmentService
         FileName = e.FileName,
         FileUrl = e.FileUrl,
         ContentType = e.ContentType,
-        UploadedByUserId = e.UploadedByUserId,
         CreatedAt = e.CreatedAt,
         UpdatedAt = e.UpdatedAt,
         DeletedAt = e.DeletedAt
@@ -44,7 +43,6 @@ public async Task<AttachmentDto?> GetByIdAsync(long id)
         FileName = entity.FileName,
         FileUrl = entity.FileUrl,
         ContentType = entity.ContentType,
-        UploadedByUserId = entity.UploadedByUserId,
         CreatedAt = entity.CreatedAt,
         UpdatedAt = entity.UpdatedAt,
         DeletedAt = entity.DeletedAt
@@ -59,7 +57,6 @@ public async Task AddAsync(AttachmentCreateDto dto)
         FileName = dto.FileName,
         FileUrl = dto.FileUrl,
         ContentType = dto.ContentType,
-        UploadedByUserId = dto.UploadedByUserId,
         CreatedAt = DateTime.UtcNow
     };
     await _repository.AddAsync(entity);
