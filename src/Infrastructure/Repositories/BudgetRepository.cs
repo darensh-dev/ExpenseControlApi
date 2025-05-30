@@ -15,5 +15,35 @@ public class BudgetRepository // : IBudgetRepository
         _context = context;
     }
 
-    // Métodos CRUD aquí (implementación pendiente)
+    // public async Task AddAsync(Budget entity)
+    // {
+    //     _context.Budgets.Add(entity);
+    //     await _context.SaveChangesAsync();
+    // }
+
+    // public async Task<Budget?> GetByIdAsync(long id)
+    // {
+    //     return await _context.Budgets.FindAsync(id);
+    // }
+
+    // public async Task<List<Budget>> GetAllAsync()
+    // {
+    //     return await _context.Budgets.ToListAsync();
+    // }
+
+    // public async Task UpdateAsync(Budget entity)
+    // {
+    //     _context.Budgets.Update(entity);
+    //     await _context.SaveChangesAsync();
+    // }
+
+    // public async Task DeleteAsync(long id)
+    // {
+    //     var entity = await _context.Budgets.FindAsync(id);
+    //     if (entity != null)
+    //     {
+    //         _context.Budgets.Remove(entity);
+    //         await _context.SaveChangesAsync();
+    //     }
+    // }
 }
