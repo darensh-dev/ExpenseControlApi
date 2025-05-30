@@ -1,14 +1,11 @@
-// Archivo: src/Application/Services/DocumentTypeService.cs
-// Requiere: DocumentTypeDto, DocumentTypeCreateDto, DocumentTypeUpdateDto en Application/DTOs
+// src/Application/Services/DocumentTypeService.cs
 using ExpenseControlApi.Application.DTOs;
-// using ExpenseControlApi.Application.Interfaces.Repositories;
-// using ExpenseControlApi.Application.Interfaces.Services
 using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class DocumentTypeService // : IDocumentTypeService
+public class DocumentTypeService : IDocumentTypeService
 {
     private readonly IDocumentTypeRepository _repository;
 
@@ -17,5 +14,12 @@ public class DocumentTypeService // : IDocumentTypeService
         _repository = repository;
     }
 
-    // Métodos CRUD aquí (implementación pendiente)
+    public async Task<List<DocumentTypeDto>> GetAllAsync () {
+        var DocumentType = await _repository.GetAllAsync();
+        return DocumentType.Select(dt => new DocumentTypeDto
+        {
+            Id = dt.Id,
+            Name = dt.Name,
+        }).ToList();
+    }
 }
