@@ -1,7 +1,8 @@
 // Archivo: src/Application/Services/DocumentTypeService.cs
 // Requiere: DocumentTypeDto, DocumentTypeCreateDto, DocumentTypeUpdateDto en Application/DTOs
 using ExpenseControlApi.Application.DTOs;
-using ExpenseControlApi.Application.Interfaces;
+using ExpenseControlApi.Application.Interfaces.Repositories;
+using ExpenseControlApi.Application.Interfaces.Services;
 using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;

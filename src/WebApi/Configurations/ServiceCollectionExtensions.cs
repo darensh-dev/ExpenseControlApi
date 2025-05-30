@@ -1,4 +1,4 @@
-using ExpenseControlApi.Application.Interfaces;
+using ExpenseControlApi.Application.Interfaces.Repositories;
 using ExpenseControlApi.Application.Services;
 using ExpenseControlApi.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,11 +1,12 @@
 using ExpenseControlApi.Application.DTOs;
-using ExpenseControlApi.Application.Interfaces;
+using ExpenseControlApi.Application.Interfaces.Repositories;
+using ExpenseControlApi.Application.Interfaces.Services;
 using ExpenseControlApi.Domain.Entities;
 
 
 namespace ExpenseControlApi.Application.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
 

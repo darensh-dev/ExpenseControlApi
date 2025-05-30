@@ -1,4 +1,4 @@
-using ExpenseControlApi.Application.Interfaces;
+using ExpenseControlApi.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseControlApi.WebApi.Controllers;
