@@ -5,9 +5,9 @@ namespace ExpenseControlApi.Application.Interfaces;
 
 public interface IAttachmentService
 {
-    Task<List<AttachmentDto>> GetAllAsync();
-    Task<AttachmentDto?> GetByIdAsync(long id);
-    Task AddAsync(AttachmentCreateDto dto);
-    Task UpdateAsync(long id, AttachmentUpdateDto dto);
-    Task DeleteAsync(long id);
+    // Task<List<AttachmentDto>> GetAllAsync();
+    // Task<AttachmentDto?> GetByIdAsync(long id);
+    // Task AddAsync(AttachmentCreateDto dto);
+    // Task UpdateAsync(long id, AttachmentUpdateDto dto);
+    // Task DeleteAsync(long id);
 }
