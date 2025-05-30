@@ -11,9 +11,13 @@ public partial class DocumentType
 
     public DateTime CreatedAt { get; set; }
 
+    public long? CreatedByUserId { get; set; }
+
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public virtual User? CreatedByUser { get; set; }
 
     public virtual ICollection<ExpenseHeader> ExpenseHeaders { get; set; } = new List<ExpenseHeader>();
 }

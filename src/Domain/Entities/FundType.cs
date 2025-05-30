@@ -9,11 +9,15 @@ public partial class FundType
 
     public string Name { get; set; } = null!;
 
+    public long? CreatedByUserId { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public virtual User? CreatedByUser { get; set; }
 
     public virtual ICollection<MonetaryFund> MonetaryFunds { get; set; } = new List<MonetaryFund>();
 }

@@ -23,6 +23,7 @@ public class ExpenseTypeConfiguration : IEntityTypeConfiguration<ExpenseType>
             .HasDefaultValueSql("(getdate())")
             .HasColumnType("datetime")
             .HasColumnName("created_at");
+        entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
         entity.Property(e => e.DeletedAt)
             .HasColumnType("datetime")
             .HasColumnName("deleted_at");
@@ -35,5 +36,9 @@ public class ExpenseTypeConfiguration : IEntityTypeConfiguration<ExpenseType>
         entity.Property(e => e.UpdatedAt)
             .HasColumnType("datetime")
             .HasColumnName("updated_at");
+
+        entity.HasOne(d => d.CreatedByUser).WithMany(p => p.ExpenseTypes)
+            .HasForeignKey(d => d.CreatedByUserId)
+            .HasConstraintName("fk_expense_types__created_by_user");
     }
 }

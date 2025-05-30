@@ -34,17 +34,11 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
         entity.Property(e => e.UpdatedAt)
             .HasColumnType("datetime")
             .HasColumnName("updated_at");
-        entity.Property(e => e.UploadedByUserId).HasColumnName("uploaded_by_user_id");
 
         entity.HasOne(d => d.ExpenseHeader).WithMany(p => p.Attachments)
             .HasForeignKey(d => d.ExpenseHeaderId)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("attachments__expense_header_id_fk");
-
-        entity.HasOne(d => d.UploadedByUser).WithMany(p => p.Attachments)
-            .HasForeignKey(d => d.UploadedByUserId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("attachments__uploaded_by_user_id_fk");
     }
 }
 

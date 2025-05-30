@@ -1,6 +1,6 @@
 CREATE DATABASE expense_control;
 
-GO
+GO 
 USE expense_control;
 
 GO
@@ -21,9 +21,11 @@ CREATE TABLE
         id INT IDENTITY (1, 1),
         name NVARCHAR (100) NOT NULL,
         created_at DATETIME NOT NULL DEFAULT GETDATE (),
+        created_by_user_id BIGINT NULL,
         updated_at DATETIME,
         deleted_at DATETIME,
-        CONSTRAINT document_types__pk PRIMARY KEY (id)
+        CONSTRAINT document_types__pk PRIMARY KEY (id),
+        CONSTRAINT fk_document_types__created_by_user FOREIGN KEY (created_by_user_id) REFERENCES dbo.users (id)
     );
 
 GO
@@ -31,10 +33,12 @@ CREATE TABLE
     fund_types (
         id INT IDENTITY (1, 1),
         name NVARCHAR (100) NOT NULL,
+        created_by_user_id BIGINT NULL,
         created_at DATETIME NOT NULL DEFAULT GETDATE (),
         updated_at DATETIME,
         deleted_at DATETIME,
-        CONSTRAINT fund_types__pk PRIMARY KEY (id)
+        CONSTRAINT fund_types__pk PRIMARY KEY (id),
+        CONSTRAINT fk_fund_types__created_by_user FOREIGN KEY (created_by_user_id) REFERENCES dbo.users (id)
     );
 
 GO
@@ -60,11 +64,13 @@ CREATE TABLE
         code NVARCHAR (10) NOT NULL,
         name NVARCHAR (150) NOT NULL,
         description NVARCHAR (500),
+        created_by_user_id BIGINT NULL,
         created_at DATETIME NOT NULL DEFAULT GETDATE (),
         updated_at DATETIME,
         deleted_at DATETIME,
         CONSTRAINT expense_types__pk PRIMARY KEY (id),
-        CONSTRAINT expense_types__code_uq UNIQUE (code)
+        CONSTRAINT expense_types__code_uq UNIQUE (code),
+        CONSTRAINT fk_expense_types__created_by_user FOREIGN KEY (created_by_user_id) REFERENCES dbo.users (id)
     );
 
 GO
@@ -111,13 +117,11 @@ CREATE TABLE
         file_name NVARCHAR (255) NOT NULL,
         file_url NVARCHAR (1000) NOT NULL,
         content_type NVARCHAR (100),
-        uploaded_by_user_id BIGINT NOT NULL,
         created_at DATETIME NOT NULL DEFAULT GETDATE (),
         updated_at DATETIME,
         deleted_at DATETIME,
         CONSTRAINT attachments__pk PRIMARY KEY (id),
-        CONSTRAINT attachments__expense_header_id_fk FOREIGN KEY (expense_header_id) REFERENCES dbo.expense_headers (id),
-        CONSTRAINT attachments__uploaded_by_user_id_fk FOREIGN KEY (uploaded_by_user_id) REFERENCES dbo.users (id)
+        CONSTRAINT attachments__expense_header_id_fk FOREIGN KEY (expense_header_id) REFERENCES dbo.expense_headers (id)
     );
 
 GO

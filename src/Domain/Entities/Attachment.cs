@@ -15,8 +15,6 @@ public partial class Attachment
 
     public string? ContentType { get; set; }
 
-    public long UploadedByUserId { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
@@ -24,6 +22,4 @@ public partial class Attachment
     public DateTime? DeletedAt { get; set; }
 
     public virtual ExpenseHeader ExpenseHeader { get; set; } = null!;
-
-    public virtual User UploadedByUser { get; set; } = null!;
 }

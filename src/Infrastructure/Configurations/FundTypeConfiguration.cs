@@ -18,6 +18,7 @@ public class FundTypeConfiguration : IEntityTypeConfiguration<FundType>
             .HasDefaultValueSql("(getdate())")
             .HasColumnType("datetime")
             .HasColumnName("created_at");
+        entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
         entity.Property(e => e.DeletedAt)
             .HasColumnType("datetime")
             .HasColumnName("deleted_at");
@@ -27,5 +28,9 @@ public class FundTypeConfiguration : IEntityTypeConfiguration<FundType>
         entity.Property(e => e.UpdatedAt)
             .HasColumnType("datetime")
             .HasColumnName("updated_at");
+
+        entity.HasOne(d => d.CreatedByUser).WithMany(p => p.FundTypes)
+            .HasForeignKey(d => d.CreatedByUserId)
+            .HasConstraintName("fk_fund_types__created_by_user");
     }
 }
