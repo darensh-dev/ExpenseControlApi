@@ -1,7 +1,6 @@
-using ExpenseControlApi.Services;
+using ExpenseControlApi.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using ExpenseControlApi.Application.DTOs;
-using ExpenseControlApi.Infrastructure.Repositories;
 
 namespace ExpenseControlApi.WebApi.Controllers;
 

@@ -1,11 +1,9 @@
 using ExpenseControlApi.Application.DTOs;
 using ExpenseControlApi.Application.Interfaces;
-using ExpenseControlApi.Infrastructure.Data;
 using ExpenseControlApi.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
 
-namespace ExpenseControlApi.Services;
+
+namespace ExpenseControlApi.Application.Services;
 
 public class UserService
 {
