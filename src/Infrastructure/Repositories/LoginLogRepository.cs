@@ -17,7 +17,7 @@ public class LoginLogRepository : ILoginLogRepository
 
     public async Task AddAsync(LoginLog log)
     {
-        _context.LoginLogs.Add(log);
+        _context.LoginLog.Add(log);
         await _context.SaveChangesAsync();
     }
 }

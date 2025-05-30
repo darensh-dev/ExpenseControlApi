@@ -1,4 +1,4 @@
-// Archivo: src/Infrastructure/Repositories/DocumentTypeRepository.cs
+// src/Infrastructure/Repositories/DocumentTypeRepository.cs
 using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
 using ExpenseControlApi.Infrastructure.Data;
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
-public class DocumentTypeRepository // : IDocumentTypeRepository
+public class DocumentTypeRepository : IDocumentTypeRepository
 {
     private readonly AppDbContext _context;
 
@@ -15,5 +15,9 @@ public class DocumentTypeRepository // : IDocumentTypeRepository
         _context = context;
     }
 
-    // Métodos CRUD aquí (implementación pendiente)
+   public async Task<List<DocumentType>> GetAllAsync()
+    {
+        return await _context.DocumentType.ToListAsync();
+    }
+
 }

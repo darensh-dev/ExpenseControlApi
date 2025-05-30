@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseControlApi.WebApi.Controllers;
 
 [ApiController]
-[Route("api/v1/documenttypes")]
+[Route("api/v1/document-types")]
 public class DocumentTypesController : ControllerBase
 {
     private readonly IDocumentTypeService _documentTypeService;
