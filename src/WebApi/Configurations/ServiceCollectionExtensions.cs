@@ -1,9 +1,8 @@
-// using ExpenseControlApi.Application.Interfaces.Repositories;
 using ExpenseControlApi.Services.Auth;
 using ExpenseControlApi.Application.Services;
 using ExpenseControlApi.Infrastructure.Repositories;
-using Microsoft.Extensions.DependencyInjection;
 using ExpenseControlApi.Application.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace ExpenseControlApi.Application.DependencyInjection;
@@ -15,10 +14,12 @@ public static class ServiceCollectionExtensions
         // Servicios
         services.AddScoped<UserService>();
         services.AddScoped<TokenService>();
+        services.AddScoped<IAuthService, AuthService>();
         // services.AddScoped<ExpenseService>();
         // ...
 
         // Repositorios
+        services.AddScoped<ILoginLogRepository, LoginLogRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         // services.AddScoped<IExpenseRepository, ExpenseRepository>();
         // ...

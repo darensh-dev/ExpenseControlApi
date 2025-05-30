@@ -1,7 +1,6 @@
+// WebApi/Controllers/AuthController.cs
 using ExpenseControlApi.Application.DTOs;
-// using ExpenseControlApi.Application.Interfaces.Services
 using ExpenseControlApi.Application.Interfaces;
-using ExpenseControlApi.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseControlApi.WebApi.Controllers;
@@ -10,25 +9,25 @@ namespace ExpenseControlApi.WebApi.Controllers;
 [Route("api/v1/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly IUserRepository _userRepository;
-    private readonly TokenService _tokenService;
+    private readonly IAuthService _authService;
 
-    public AuthController(IUserRepository userRepository, TokenService tokenService)
+    public AuthController(IAuthService authService)
     {
-        _userRepository = userRepository;
-        _tokenService = tokenService;
+        _authService = authService;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
-        var user = await _userRepository.GetByUsernameAsync(dto.Username);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+        try
+        {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var result = await _authService.LoginAsync(dto, ip);
+            return Ok(result);
+        }
+        catch (UnauthorizedAccessException)
         {
             return Unauthorized(new { message = "Invalid credentials" });
         }
-
-        var token = _tokenService.GenerateToken(user);
-        return Ok(new { token });
     }
 }
