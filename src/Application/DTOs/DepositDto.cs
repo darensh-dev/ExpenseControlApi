@@ -27,7 +27,3 @@ public class DepositCreateDto
     public decimal Amount { get; set; }
 }
 
-public class DepositDeleteDto
-{
-    public long Id { get; set; }
-}
