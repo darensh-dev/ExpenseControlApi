@@ -34,6 +34,24 @@ public class MonetaryFundsController : ControllerBase
         return Ok(funds);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(long id)
+    {
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!long.TryParse(userIdString, out var userId))
+        {
+            return BadRequest("Invalid user ID in token");
+        }
+
+        var fund = await _monetaryFundService.GetByIdAsync(id, userId);
+        if (fund == null)
+        {
+            return NotFound(new { message = "Monetary fund not found" });
+        }
+
+        return Ok(fund);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] MonetaryFundCreateDto dto)
     {
@@ -51,7 +69,7 @@ public class MonetaryFundsController : ControllerBase
                 InitialBalance = dto.InitialBalance,
             };
             var created = await _monetaryFundService.AddAsync(userId, monetaryFund);
-            return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
         catch (Exception ex)
         {
@@ -79,7 +97,7 @@ public class MonetaryFundsController : ControllerBase
             };
 
             var updated = await _monetaryFundService.UpdateAsync(userId, monetaryFund);
-            return CreatedAtAction(nameof(GetAll), new { id = updated.Id }, updated);
+            return Ok(updated);
         }
         catch (Exception ex)
         {

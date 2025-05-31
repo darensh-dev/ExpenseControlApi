@@ -24,9 +24,9 @@ public class MonetaryFundCreateDto
 public class MonetaryFundUpdateDto
 {
     public long Id { get; set; }
-    public int FundTypeId { get; set; }
-    public string Name { get; set; } = null!;
-    public decimal InitialBalance { get; set; }
+    public int? FundTypeId { get; set; }
+    public string? Name { get; set; }
+    public decimal? InitialBalance { get; set; }
 }
 
 public class MonetaryFundDeleteDto

@@ -29,6 +29,25 @@ public class MonetaryFundService : IMonetaryFundService
         }).ToList();
     }
 
+    public async Task<MonetaryFundDto?> GetByIdAsync(long id, long userId)
+    {
+        var monetaryFund = await _repository.GetByIdAsync(id, userId);
+
+        if (monetaryFund == null)
+            return null;
+
+        return new MonetaryFundDto
+        {
+            Id = monetaryFund.Id,
+            Name = monetaryFund.Name,
+            FundTypeId = monetaryFund.FundTypeId,
+            InitialBalance = monetaryFund.InitialBalance,
+            CreatedAt = monetaryFund.CreatedAt,
+            UpdatedAt = monetaryFund.UpdatedAt,
+            DeletedAt = monetaryFund.DeletedAt,
+        };
+    }
+
     public async Task<MonetaryFundDto> AddAsync(long userId, MonetaryFundCreateDto dto)
     {
         var entity = new MonetaryFund
@@ -55,17 +74,15 @@ public class MonetaryFundService : IMonetaryFundService
 
     public async Task<MonetaryFundDto> UpdateAsync(long userId, MonetaryFundUpdateDto dto)
     {
-        var existing = await _repository.GetByIdAsync(dto.Id);
-        if (existing != null)
+        var entity = await _repository.GetByIdAsync(dto.Id, userId);
+        if (entity == null)
         {
-            throw new Exception("Monetary Fund already taken");
+            throw new Exception("Monetary fund not found or access denied.");
         }
-        var entity = new MonetaryFund
-        {
-            Id = dto.Id,
-            Name = dto.Name,
-            InitialBalance = dto.InitialBalance,
-        };
+
+        if (dto.Name is not null) entity.Name = dto.Name;
+        if (dto.FundTypeId.HasValue) entity.FundTypeId = dto.FundTypeId.Value;
+        if (dto.InitialBalance.HasValue) entity.InitialBalance = dto.InitialBalance.Value;
 
         await _repository.UpdateAsync(entity);
 

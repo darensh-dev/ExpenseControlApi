@@ -15,16 +15,16 @@ public class MonetaryFundRepository : IMonetaryFundRepository
         _context = context;
     }
 
-    public async Task<MonetaryFund?> GetByIdAsync(long id)
+    public async Task<MonetaryFund?> GetByIdAsync(long id, long userId)
     {
         return await _context.MonetaryFund
-            .FirstOrDefaultAsync(mf => mf.Id == id && mf.DeletedAt == null);
+            .FirstOrDefaultAsync(mf => mf.Id == id && mf.UserId == userId && mf.DeletedAt == null);
     }
 
     public async Task<List<MonetaryFund>> GetAllAsync(long userId)
     {
         return await _context.MonetaryFund
-            .Where(mf => mf.DeletedAt == null && mf.UserId == userId)
+            .Where(mf => mf.DeletedAt == null && mf.UserId == userId && mf.DeletedAt == null)
             .ToListAsync();
     }
 
