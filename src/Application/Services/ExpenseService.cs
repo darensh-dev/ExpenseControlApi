@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using ExpenseControlApi.Application.DTOs;
 using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
+using ExpenseControlApi.Application.Exceptions;
 
 public class ExpenseService : IExpenseService
 {
@@ -136,7 +137,7 @@ public class ExpenseService : IExpenseService
             var projected = totalSpent + detail.Amount;
             if (projected > budget.Amount)
             {
-                throw new ValidationException($"Overspent for type {detail.ExpenseTypeId}: Budget={budget.Amount}, Projected={projected}");
+                throw new BudgetExceededException(detail.ExpenseTypeId, budget.Amount, projected);
             }
         }
     }
