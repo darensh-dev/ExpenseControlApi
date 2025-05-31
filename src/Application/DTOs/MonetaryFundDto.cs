@@ -16,6 +16,13 @@ public class MonetaryFundDto
 
 }
 
+public class MonetaryFundExpenseDto
+{
+    public long Id { get; set; }
+    public string Name { get; set; } = null!;
+
+}
+
 public class MonetaryFundCreateDto
 {
     public int FundTypeId { get; set; }

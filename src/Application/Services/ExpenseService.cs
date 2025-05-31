@@ -39,25 +39,33 @@ public class ExpenseService : IExpenseService
             Amount = d.Amount,
         }).ToList();
 
-        var expenseTypeIds = details.Select(d => d.ExpenseTypeId).Distinct().ToList();
-        var expenseTypes = await _expenseTypeRepository.GetByIdsAsync(expenseTypeIds);
-
         await _repository.AddAsync(header, details);
+
+        var _header = await _repository.GetByIdAsync(header.Id, userId);
+        if (_header == null) throw new Exception("The expense could not be created");
 
         return new ExpenseDto
         {
-            Id = header.Id,
-            UserId = header.UserId,
-            MonetaryFundId = header.MonetaryFundId,
-            Date = header.Date,
-            MerchantName = header.MerchantName,
-            DocumentTypeId = header.DocumentTypeId,
-            OtherDocumentTypeText = header.OtherDocumentTypeText,
-            Notes = header.Notes,
-            CreatedAt = header.CreatedAt,
-            UpdatedAt = header.UpdatedAt,
-            DeletedAt = header.DeletedAt,
-            Details = details.Select(d => new ExpenseDetailDto
+            Id = _header.Id,
+            UserId = _header.UserId,
+            Date = _header.Date,
+            MerchantName = _header.MerchantName,
+            OtherDocumentTypeText = _header.OtherDocumentTypeText,
+            Notes = _header.Notes,
+            CreatedAt = _header.CreatedAt,
+            UpdatedAt = _header.UpdatedAt,
+            DeletedAt = _header.DeletedAt,
+            MonetaryFund = new MonetaryFundExpenseDto
+            {
+                Id = _header.MonetaryFund.Id,
+                Name = _header.MonetaryFund.Name
+            },
+            DocumentType = new DocumentTypeDto
+            {
+                Id = _header.DocumentType.Id,
+                Name = _header.DocumentType.Name,
+            },
+            Details = _header.ExpenseDetails.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,
                 ExpenseTypeId = d.ExpenseTypeId,
@@ -67,10 +75,10 @@ public class ExpenseService : IExpenseService
                 DeletedAt = d.DeletedAt,
                 ExpenseType = new ExpenseTypeDto
                 {
-                    Id = expenseTypes[d.ExpenseTypeId].Id,
-                    Name = expenseTypes[d.ExpenseTypeId].Name,
-                    Code = expenseTypes[d.ExpenseTypeId].Code,
-                    Description = expenseTypes[d.ExpenseTypeId].Description,
+                    Id = d.ExpenseType.Id,
+                    Name = d.ExpenseType.Name,
+                    Code = d.ExpenseType.Code,
+                    Description = d.ExpenseType.Description,
                 }
             }).ToList()
         };
@@ -85,15 +93,23 @@ public class ExpenseService : IExpenseService
         {
             Id = header.Id,
             UserId = header.UserId,
-            MonetaryFundId = header.MonetaryFundId,
             Date = header.Date,
             MerchantName = header.MerchantName,
-            DocumentTypeId = header.DocumentTypeId,
             OtherDocumentTypeText = header.OtherDocumentTypeText,
             Notes = header.Notes,
             CreatedAt = header.CreatedAt,
             UpdatedAt = header.UpdatedAt,
             DeletedAt = header.DeletedAt,
+            MonetaryFund = new MonetaryFundExpenseDto
+            {
+                Id = header.MonetaryFund.Id,
+                Name = header.MonetaryFund.Name
+            },
+            DocumentType = new DocumentTypeDto
+            {
+                Id = header.DocumentType.Id,
+                Name = header.DocumentType.Name,
+            },
             Details = header.ExpenseDetails.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,
@@ -121,15 +137,23 @@ public class ExpenseService : IExpenseService
         {
             Id = header.Id,
             UserId = header.UserId,
-            MonetaryFundId = header.MonetaryFundId,
             Date = header.Date,
             MerchantName = header.MerchantName,
-            DocumentTypeId = header.DocumentTypeId,
             OtherDocumentTypeText = header.OtherDocumentTypeText,
             Notes = header.Notes,
             CreatedAt = header.CreatedAt,
             UpdatedAt = header.UpdatedAt,
             DeletedAt = header.DeletedAt,
+            MonetaryFund = new MonetaryFundExpenseDto
+            {
+                Id = header.MonetaryFund.Id,
+                Name = header.MonetaryFund.Name
+            },
+            DocumentType = new DocumentTypeDto
+            {
+                Id = header.DocumentType.Id,
+                Name = header.DocumentType.Name,
+            },
             Details = header.ExpenseDetails.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,

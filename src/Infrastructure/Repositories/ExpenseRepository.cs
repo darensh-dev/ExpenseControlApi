@@ -18,6 +18,8 @@ public class ExpenseRepository : IExpenseRepository
     public async Task<ExpenseHeader?> GetByIdAsync(long id, long userId)
     {
         return await _context.ExpenseHeader
+            .Include(e => e.MonetaryFund)
+            .Include(e => e.DocumentType)
             .Include(e => e.ExpenseDetails).ThenInclude(d => d.ExpenseType)
             .FirstOrDefaultAsync(e => e.Id == id && e.UserId == userId && e.DeletedAt == null);
     }
@@ -25,6 +27,8 @@ public class ExpenseRepository : IExpenseRepository
     public async Task<List<ExpenseHeader>> GetByDateAsync(long userId, int year, int month)
     {
         return await _context.ExpenseHeader
+            .Include(e => e.MonetaryFund)
+            .Include(e => e.DocumentType)
             .Include(e => e.ExpenseDetails).ThenInclude(d => d.ExpenseType)
             .Where(e => e.UserId == userId &&
                         e.Date.Year == year &&
