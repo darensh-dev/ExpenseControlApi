@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseControlApi.Application.DTOs;
 
@@ -16,7 +17,11 @@ public class DepositDto
 
 public class DepositGetDto
 {
+    [Required(ErrorMessage = "El campo 'Year' es obligatorio.")]
+    [Range(2000, 2100, ErrorMessage = "El año debe estar entre 2000 y 2100.")]
     public long Year { get; set; }
+    [Required(ErrorMessage = "El campo 'Month' es obligatorio.")]
+    [Range(1, 12, ErrorMessage = "El mes debe estar entre 1 y 12.")]
     public long Month { get; set; }
 }
 
