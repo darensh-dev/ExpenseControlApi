@@ -9,7 +9,7 @@ namespace ExpenseControlApi.WebApi.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/v1/budgets")]
+[Route("api/v1/budget")]
 public class BudgetsController : ControllerBase
 {
     private readonly IBudgetService _budgetService;
