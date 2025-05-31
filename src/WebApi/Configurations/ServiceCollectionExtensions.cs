@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMonetaryFundService, MonetaryFundService>();
         services.AddScoped<IDepositService, DepositService>();
         services.AddScoped<IBudgetService, BudgetService>();
+        services.AddScoped<IExpenseService, ExpenseService>();
 
         // Repositorios
         services.AddScoped<ILoginLogRepository, LoginLogRepository>();
@@ -31,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMonetaryFundRepository, MonetaryFundRepository>();
         services.AddScoped<IDepositRepository, DepositRepository>();
         services.AddScoped<IBudgetRepository, BudgetRepository>();
+        services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
         return services;
     }

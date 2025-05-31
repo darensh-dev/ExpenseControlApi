@@ -17,7 +17,6 @@ public class ExpenseDetailDto
 
 public class ExpenseDetailCreateDto
 {
-    public long ExpenseHeaderId { get; set; }
     public int ExpenseTypeId { get; set; }
     public decimal Amount { get; set; }
 
@@ -26,7 +25,6 @@ public class ExpenseDetailCreateDto
 public class ExpenseDetailUpdateDto
 {
     public long Id { get; set; }
-    public long ExpenseHeaderId { get; set; }
     public int ExpenseTypeId { get; set; }
     public decimal Amount { get; set; }
 }

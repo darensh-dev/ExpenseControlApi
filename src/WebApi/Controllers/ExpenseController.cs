@@ -29,12 +29,12 @@ public class ExpenseController : ControllerBase
         }
         var result = await _expenseService.GetByIdAsync(id, userId);
         if (result == null)
-            return NotFound();
+            return NoContent();
 
         return Ok(result);
     }
 
-    [HttpGet("by-date")]
+    [HttpGet]
     public async Task<IActionResult> GetByDate([FromQuery] int year, [FromQuery] int month)
     {
         var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -43,6 +43,9 @@ public class ExpenseController : ControllerBase
             return BadRequest("Invalid user ID in token");
         }
         var result = await _expenseService.GetByDateAsync(userId, year, month);
+        if (result.Count == 0)
+            return NoContent();
+
         return Ok(result);
     }
 
