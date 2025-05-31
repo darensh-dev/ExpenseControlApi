@@ -26,17 +26,26 @@ public class ExpenseTypeService : IExpenseTypeService
         }).ToList();
     }
 
-    public async Task AddAsync(ExpenseTypeCreateServiceDto dto)
+    public async Task<ExpenseTypeDto> AddAsync(ExpenseTypeCreateServiceDto dto)
     {
-        var expenseType = new ExpenseType
+        var code = await _repository.GenerateNextCodeAsync(dto.CreatedByUserId);
+        var entity = new ExpenseType
         {
             Name = dto.Name,
             Description = dto.Description,
             CreatedByUserId = dto.CreatedByUserId,
+            Code = code
         };
 
-        await _repository.AddAsync(expenseType);
+        await _repository.AddAsync(entity);
 
+        return new ExpenseTypeDto
+        {
+            Id = entity.Id,
+            Code = entity.Code,
+            Name = entity.Name,
+            Description = entity.Description
+        };
     }
 
 }

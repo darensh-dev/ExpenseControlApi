@@ -28,4 +28,25 @@ public class ExpenseTypeRepository : IExpenseTypeRepository
         _context.ExpenseType.Add(entity);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<string> GenerateNextCodeAsync(long userId)
+    {
+        var last = await _context.ExpenseType
+            .Where(e => e.CreatedByUserId == userId)
+            .OrderByDescending(e => e.Id)
+            .FirstOrDefaultAsync();
+
+        int nextNumber = 1;
+
+        if (last != null && !string.IsNullOrEmpty(last.Code))
+        {
+            var parts = last.Code.Split('-');
+            if (parts.Length == 2 && int.TryParse(parts[1], out int lastNumber))
+            {
+                nextNumber = lastNumber + 1;
+            }
+        }
+
+        return $"ET-{nextNumber:D4}";
+    }
 }

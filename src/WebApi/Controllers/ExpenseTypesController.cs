@@ -52,9 +52,10 @@ public class ExpenseTypesController : ControllerBase
                 Name = dto.Name,
                 Description = dto.Description,
                 CreatedByUserId = userId,
+                Code = ""
             };
-            await _expenseTypeService.AddAsync(expenseType);
-            return Ok(new { message = "Expense Type registered successfully" });
+            var created  = await _expenseTypeService.AddAsync(expenseType);
+            return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);
         }
         catch (Exception ex)
         {
