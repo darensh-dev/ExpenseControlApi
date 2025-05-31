@@ -137,7 +137,7 @@ public class ExpenseService : IExpenseService
             var projected = totalSpent + detail.Amount;
             if (projected > budget.Amount)
             {
-                throw new BudgetExceededException(detail.ExpenseTypeId, budget.Amount, projected);
+                throw new BudgetExceededException(detail.ExpenseTypeId, budget.Amount, projected, budget.ExpenseType.Name);
             }
         }
     }

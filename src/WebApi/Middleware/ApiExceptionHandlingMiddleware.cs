@@ -26,6 +26,7 @@ public class ApiExceptionHandlingMiddleware
                 detail = ex.Message,
                 status = 400,
                 expenseTypeId = ex.ExpenseTypeId,
+                expenseTypeName = ex.expenseTypeName,
                 budget = ex.Budget,
                 projected = ex.Projected
             };

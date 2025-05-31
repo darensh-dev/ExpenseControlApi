@@ -38,6 +38,7 @@ public class BudgetRepository : IBudgetRepository
     public async Task<Budget?> GetByTypeAndMonthAsync(int expenseTypeId, long userId, DateOnly month)
     {
         return await _context.Budget
+            .Include(b => b.ExpenseType)
             .Where(b => b.ExpenseTypeId == expenseTypeId &&
                         b.Month.Year == month.Year &&
                         b.Month.Month == month.Month &&
