@@ -84,6 +84,7 @@ public class MonetaryFundService : IMonetaryFundService
         if (dto.FundTypeId.HasValue) entity.FundTypeId = dto.FundTypeId.Value;
         if (dto.InitialBalance.HasValue) entity.InitialBalance = dto.InitialBalance.Value;
 
+        entity.UpdatedAt = DateTime.UtcNow;
         await _repository.UpdateAsync(entity);
 
         return new MonetaryFundDto
