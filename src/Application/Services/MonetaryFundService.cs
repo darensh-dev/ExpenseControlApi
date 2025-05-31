@@ -69,6 +69,8 @@ public class MonetaryFundService : IMonetaryFundService
         };
 
         await _repository.AddAsync(entity);
+        var fundType = await _fundTypeRepository.GetByIdAsync(dto.FundTypeId, userId);
+        if (fundType is null) throw new Exception("Fund type not found");
 
         return new MonetaryFundDto
         {
@@ -80,8 +82,8 @@ public class MonetaryFundService : IMonetaryFundService
             DeletedAt = entity.DeletedAt,
             FundType = new FundTypeDto
             {
-                Id = entity.FundType.Id,
-                Name = entity.FundType.Name,
+                Id = fundType.Id,
+                Name = fundType.Name,
             }
         };
     }
@@ -94,7 +96,13 @@ public class MonetaryFundService : IMonetaryFundService
             throw new Exception("Monetary fund not found or access denied.");
         }
 
+        if (dto.Name is null && !dto.InitialBalance.HasValue && !dto.FundTypeId.HasValue)
+        {
+            throw new Exception("Needs to update at least one value");
+        }
+
         if (dto.Name is not null) entity.Name = dto.Name;
+        if (dto.InitialBalance.HasValue) entity.InitialBalance = dto.InitialBalance.Value;
         if (dto.FundTypeId.HasValue)
         {
             var fundType = await _fundTypeRepository.GetByIdAsync(dto.FundTypeId.Value, userId);
@@ -104,8 +112,6 @@ public class MonetaryFundService : IMonetaryFundService
             }
             entity.FundTypeId = dto.FundTypeId.Value;
         }
-
-        if (dto.InitialBalance.HasValue) entity.InitialBalance = dto.InitialBalance.Value;
 
         entity.UpdatedAt = DateTime.UtcNow;
         await _repository.UpdateAsync(entity);
