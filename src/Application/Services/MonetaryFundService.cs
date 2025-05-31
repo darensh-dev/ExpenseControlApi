@@ -16,35 +16,42 @@ public class MonetaryFundService : IMonetaryFundService
 
     public async Task<List<MonetaryFundDto>> GetAllAsync(long userId)
     {
-        var MonetaryFund = await _repository.GetAllAsync(userId);
-        return MonetaryFund.Select(mf => new MonetaryFundDto
+        var entity = await _repository.GetAllAsync(userId);
+        return entity.Select(mf => new MonetaryFundDto
         {
             Id = mf.Id,
             Name = mf.Name,
-            FundTypeId = mf.FundTypeId,
             InitialBalance = mf.InitialBalance,
             CreatedAt = mf.CreatedAt,
             UpdatedAt = mf.UpdatedAt,
             DeletedAt = mf.DeletedAt,
+            FundType = new FundTypeDto
+            {
+                Id = mf.FundType.Id,
+                Name = mf.FundType.Name,
+            }
         }).ToList();
     }
 
     public async Task<MonetaryFundDto?> GetByIdAsync(long id, long userId)
     {
-        var monetaryFund = await _repository.GetByIdAsync(id, userId);
+        var entity = await _repository.GetByIdAsync(id, userId);
 
-        if (monetaryFund == null)
-            return null;
+        if (entity == null) return null;
 
         return new MonetaryFundDto
         {
-            Id = monetaryFund.Id,
-            Name = monetaryFund.Name,
-            FundTypeId = monetaryFund.FundTypeId,
-            InitialBalance = monetaryFund.InitialBalance,
-            CreatedAt = monetaryFund.CreatedAt,
-            UpdatedAt = monetaryFund.UpdatedAt,
-            DeletedAt = monetaryFund.DeletedAt,
+            Id = entity.Id,
+            Name = entity.Name,
+            InitialBalance = entity.InitialBalance,
+            CreatedAt = entity.CreatedAt,
+            UpdatedAt = entity.UpdatedAt,
+            DeletedAt = entity.DeletedAt,
+            FundType = new FundTypeDto
+            {
+                Id = entity.FundType.Id,
+                Name = entity.FundType.Name,
+            }
         };
     }
 
@@ -64,11 +71,15 @@ public class MonetaryFundService : IMonetaryFundService
         {
             Id = entity.Id,
             Name = entity.Name,
-            FundTypeId = entity.FundTypeId,
             InitialBalance = entity.InitialBalance,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            FundType = new FundTypeDto
+            {
+                Id = entity.FundType.Id,
+                Name = entity.FundType.Name,
+            }
         };
     }
 
@@ -91,11 +102,15 @@ public class MonetaryFundService : IMonetaryFundService
         {
             Id = entity.Id,
             Name = entity.Name,
-            FundTypeId = entity.FundTypeId,
             InitialBalance = entity.InitialBalance,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            FundType = new FundTypeDto
+            {
+                Id = entity.FundType.Id,
+                Name = entity.FundType.Name,
+            }
         };
     }
 }

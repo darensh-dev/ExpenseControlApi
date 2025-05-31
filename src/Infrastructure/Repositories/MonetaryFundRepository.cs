@@ -17,13 +17,13 @@ public class MonetaryFundRepository : IMonetaryFundRepository
 
     public async Task<MonetaryFund?> GetByIdAsync(long id, long userId)
     {
-        return await _context.MonetaryFund
+        return await _context.MonetaryFund.Include(e => e.FundType)
             .FirstOrDefaultAsync(mf => mf.Id == id && mf.UserId == userId && mf.DeletedAt == null);
     }
 
     public async Task<List<MonetaryFund>> GetAllAsync(long userId)
     {
-        return await _context.MonetaryFund
+        return await _context.MonetaryFund.Include(e => e.FundType)
             .Where(mf => mf.DeletedAt == null && mf.UserId == userId && mf.DeletedAt == null)
             .ToListAsync();
     }
