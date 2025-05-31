@@ -7,12 +7,13 @@ namespace ExpenseControlApi.Application.DTOs;
 public class ExpenseDetailDto
 {
     public long Id { get; set; }
-    public long ExpenseHeaderId { get; set; }
     public int ExpenseTypeId { get; set; }
     public decimal Amount { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+
+    public ExpenseTypeDto ExpenseType { get; set; } = null!;
 }
 
 public class ExpenseDetailCreateDto

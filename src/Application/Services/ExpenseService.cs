@@ -54,7 +54,6 @@ public class ExpenseService : IExpenseService
             Details = details.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,
-                ExpenseHeaderId = d.ExpenseHeaderId,
                 ExpenseTypeId = d.ExpenseTypeId,
                 Amount = d.Amount,
                 CreatedAt = d.CreatedAt,
@@ -85,12 +84,18 @@ public class ExpenseService : IExpenseService
             Details = header.ExpenseDetails.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,
-                ExpenseHeaderId = d.ExpenseHeaderId,
                 ExpenseTypeId = d.ExpenseTypeId,
                 Amount = d.Amount,
                 CreatedAt = d.CreatedAt,
                 UpdatedAt = d.UpdatedAt,
-                DeletedAt = d.DeletedAt
+                DeletedAt = d.DeletedAt,
+                ExpenseType = new ExpenseTypeDto
+                {
+                    Id = d.ExpenseType.Id,
+                    Name = d.ExpenseType.Name,
+                    Code = d.ExpenseType.Code,
+                    Description = d.ExpenseType.Description,
+                }
             }).ToList()
         };
     }
@@ -115,12 +120,18 @@ public class ExpenseService : IExpenseService
             Details = header.ExpenseDetails.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,
-                ExpenseHeaderId = d.ExpenseHeaderId,
                 ExpenseTypeId = d.ExpenseTypeId,
                 Amount = d.Amount,
                 CreatedAt = d.CreatedAt,
                 UpdatedAt = d.UpdatedAt,
-                DeletedAt = d.DeletedAt
+                DeletedAt = d.DeletedAt,
+                ExpenseType = new ExpenseTypeDto
+                {
+                    Id = d.ExpenseType.Id,
+                    Name = d.ExpenseType.Name,
+                    Code = d.ExpenseType.Code,
+                    Description = d.ExpenseType.Description,
+                }
             }).ToList()
         }).ToList();
     }
