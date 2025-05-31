@@ -8,10 +8,13 @@ namespace ExpenseControlApi.Application.Services;
 public class BudgetService : IBudgetService
 {
     private readonly IBudgetRepository _repository;
+    private readonly IExpenseTypeRepository _expenseTypeRepository;
 
-    public BudgetService(IBudgetRepository repository)
+    public BudgetService(IBudgetRepository repository, IExpenseTypeRepository expenseTypeRepository)
     {
         _repository = repository;
+        _expenseTypeRepository = expenseTypeRepository;
+
     }
 
     public async Task<List<BudgetDto>> GetAllAsync(long userId)
@@ -20,12 +23,18 @@ public class BudgetService : IBudgetService
         return budget.Select(e => new BudgetDto
         {
             Id = e.Id,
-            ExpenseTypeId = e.ExpenseTypeId,
             Month = e.Month,
             Amount = e.Amount,
             CreatedAt = e.CreatedAt,
             UpdatedAt = e.UpdatedAt,
             DeletedAt = e.DeletedAt,
+            ExpenseType = new ExpenseTypeDto
+            {
+                Id = e.ExpenseType.Id,
+                Name = e.ExpenseType.Name,
+                Code = e.ExpenseType.Code,
+                Description = e.ExpenseType.Description,
+            }
         }).ToList();
     }
 
@@ -36,12 +45,18 @@ public class BudgetService : IBudgetService
         return new BudgetDto
         {
             Id = entity.Id,
-            ExpenseTypeId = entity.ExpenseTypeId,
             Month = entity.Month,
             Amount = entity.Amount,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            ExpenseType = new ExpenseTypeDto
+            {
+                Id = entity.ExpenseType.Id,
+                Name = entity.ExpenseType.Name,
+                Code = entity.ExpenseType.Code,
+                Description = entity.ExpenseType.Description,
+            }
         };
     }
 
@@ -55,15 +70,24 @@ public class BudgetService : IBudgetService
             UserId = userId,
         };
         await _repository.AddAsync(entity);
+        var expenseType = await _expenseTypeRepository.GetByIdAsync(dto.ExpenseTypeId, userId);
+        if (expenseType is null) throw new Exception("Expense type not found");
+
         return new BudgetDto
         {
             Id = entity.Id,
-            ExpenseTypeId = entity.ExpenseTypeId,
             Month = entity.Month,
             Amount = entity.Amount,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            ExpenseType = new ExpenseTypeDto
+            {
+                Id = expenseType.Id,
+                Name = expenseType.Name,
+                Code = expenseType.Code,
+                Description = expenseType.Description,
+            }
         };
     }
 
@@ -72,19 +96,45 @@ public class BudgetService : IBudgetService
         var entity = await _repository.GetByIdAsync(dto.Id, userId);
         if (entity == null) throw new Exception("Budget not found or access denied.");
 
-        entity.UpdatedAt = DateTime.UtcNow;
+        if (dto.Month is null && !dto.Amount.HasValue && !dto.ExpenseTypeId.HasValue)
+        {
+            throw new Exception("Needs to update at least one value");
+        }
 
+        if (dto.Month is not null) entity.Month = (DateOnly)dto.Month;
+        if (dto.Amount.HasValue) entity.Amount = dto.Amount.Value;
+
+        ExpenseType? updatedExpenseType = null;
+        if (dto.ExpenseTypeId.HasValue)
+        {
+            updatedExpenseType = await _expenseTypeRepository.GetByIdAsync(dto.ExpenseTypeId.Value, userId);
+            if (updatedExpenseType is null)
+            {
+                throw new Exception($"ExpenseType with ID {dto.ExpenseTypeId} not found.");
+            }
+            entity.ExpenseTypeId = dto.ExpenseTypeId.Value;
+        }
+
+        entity.UpdatedAt = DateTime.UtcNow;
         await _repository.UpdateAsync(entity);
 
+        var expenseTypeToUse = updatedExpenseType ?? entity.ExpenseType;
+        if (expenseTypeToUse is null) throw new Exception("Expense Type not found");
         return new BudgetDto
         {
             Id = entity.Id,
-            ExpenseTypeId = entity.ExpenseTypeId,
             Month = entity.Month,
             Amount = entity.Amount,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            ExpenseType = new ExpenseTypeDto
+            {
+                Id = expenseTypeToUse.Id,
+                Name = expenseTypeToUse.Name,
+                Code = expenseTypeToUse.Code,
+                Description = expenseTypeToUse.Description,
+            }
         };
     }
 

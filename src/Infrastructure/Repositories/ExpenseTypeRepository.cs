@@ -15,6 +15,17 @@ public class ExpenseTypeRepository : IExpenseTypeRepository
         _context = context;
     }
 
+    public async Task<ExpenseType?> GetByIdAsync(int id, long userId)
+    {
+        return await _context.ExpenseType
+            .Where(
+                dt => dt.DeletedAt == null &&
+                dt.Id == id &&
+                (dt.CreatedByUserId == null || dt.CreatedByUserId == userId)
+            )
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<ExpenseType>> GetAllAsync(long userId)
     {
         return await _context.ExpenseType

@@ -7,8 +7,8 @@ El objetivo es llevar el control de ingresos y egresos por fondo monetario.
 
 ### Mantenimientos:
 
-Tipos de Gasto
-Fondo Monetario
+- Tipos de Gasto
+- Fondo Monetario
 
 ### Movimientos
 
@@ -55,40 +55,40 @@ Gráfico comparativo de presupuestos y ejecución: debe solicitar un rango de fe
 🧩 Servicios por Módulo
 🔧 MANTENIMIENTOS
 1. Tipos de Gasto
-GET /expense-types – Listar tipos de gasto.
+GET /expense-types - Listar tipos de gasto.
 
-POST /expense-types – Crear nuevo tipo de gasto (código generado automáticamente).
+POST /expense-types - Crear nuevo tipo de gasto (código generado automáticamente).
 
-PUT /expense-types/{id} – Editar tipo de gasto.
+PUT /expense-types/{id} - Editar tipo de gasto.
 
-DELETE /expense-types/{id} – Eliminar tipo de gasto.
+DELETE /expense-types/{id} - Eliminar tipo de gasto.
 
 2. Fondos Monetarios
-GET /funds – Listar fondos monetarios.
+GET /funds - Listar fondos monetarios.
 
-POST /funds – Crear fondo monetario (cuenta bancaria o caja chica).
+POST /funds - Crear fondo monetario (cuenta bancaria o caja chica).
 
-PUT /funds/{id} – Editar fondo monetario.
+PUT /funds/{id} - Editar fondo monetario.
 
-DELETE /funds/{id} – Eliminar fondo monetario.
+DELETE /funds/{id} - Eliminar fondo monetario.
 
 💼 MOVIMIENTOS
 3. Presupuesto por tipo de gasto y mes
-GET /budgets?month=YYYY-MM – Obtener presupuestos por mes.
+GET /budgets?month=YYYY-MM - Obtener presupuestos por mes.
 
-POST /budgets – Crear o actualizar presupuesto (requiere: usuario, tipo de gasto, mes, monto).
+POST /budgets - Crear o actualizar presupuesto (requiere: usuario, tipo de gasto, mes, monto).
 
-DELETE /budgets/{id} – Eliminar presupuesto.
+DELETE /budgets/{id} - Eliminar presupuesto.
 
 4. Registro de Gastos (Encabezado y Detalle - Transaccional)
-GET /expenses?from=YYYY-MM-DD&to=YYYY-MM-DD – Listar gastos por rango de fechas.
+GET /expenses?from=YYYY-MM-DD&to=YYYY-MM-DD - Listar gastos por rango de fechas.
 
-POST /expenses – Crear gasto con encabezado y detalles.
+POST /expenses - Crear gasto con encabezado y detalles.
 ⚠️ Debe incluir validación de sobregiro en presupuesto.
 
-GET /expenses/{id} – Ver gasto específico (con detalles).
+GET /expenses/{id} - Ver gasto específico (con detalles).
 
-DELETE /expenses/{id} – Eliminar gasto completo.
+DELETE /expenses/{id} - Eliminar gasto completo.
 
 Datos requeridos:
 Encabezado: Fecha, Fondo, Observaciones, Comercio, Tipo de Documento
@@ -96,15 +96,15 @@ Encabezado: Fecha, Fondo, Observaciones, Comercio, Tipo de Documento
 Detalle: Tipo de Gasto, Monto (1 o más)
 
 5. Registro de Depósitos
-GET /deposits?from=YYYY-MM-DD&to=YYYY-MM-DD – Listar depósitos por fecha.
+GET /deposits?from=YYYY-MM-DD&to=YYYY-MM-DD - Listar depósitos por fecha.
 
-POST /deposits – Crear depósito (requiere: fecha, fondo, monto).
+POST /deposits - Crear depósito (requiere: fecha, fondo, monto).
 
-DELETE /deposits/{id} – Eliminar depósito.
+DELETE /deposits/{id} - Eliminar depósito.
 
 📊 CONSULTAS Y REPORTES
 6. Consulta de movimientos
-GET /movements?from=YYYY-MM-DD&to=YYYY-MM-DD – Lista todos los movimientos (gastos y depósitos) en un rango de fechas.
+GET /movements?from=YYYY-MM-DD&to=YYYY-MM-DD - Lista todos los movimientos (gastos y depósitos) en un rango de fechas.
 
 7. Gráfico Comparativo Presupuesto vs Ejecución
 GET /reports/budget-vs-execution?from=YYYY-MM-DD&to=YYYY-MM-DD

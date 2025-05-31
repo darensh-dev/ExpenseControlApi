@@ -24,6 +24,7 @@ public class BudgetRepository : IBudgetRepository
     public async Task<Budget?> GetByIdAsync(long id, long userId)
     {
         return await _context.Budget
+            .Include(b => b.ExpenseType)
             .Where(
                 d => d.Id == id &&
                 d.DeletedAt == null &&
@@ -34,6 +35,7 @@ public class BudgetRepository : IBudgetRepository
     public async Task<List<Budget>> GetAllAsync(long userId)
     {
         return await _context.Budget
+            .Include(b => b.ExpenseType)
             .Where(dt => dt.DeletedAt == null && dt.UserId == userId)
             .ToListAsync();
     }

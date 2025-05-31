@@ -7,12 +7,14 @@ namespace ExpenseControlApi.Application.DTOs;
 public class BudgetDto
 {
     public long Id { get; set; }
-    public int ExpenseTypeId { get; set; }
     public DateOnly Month { get; set; }
     public decimal Amount { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+
+    public ExpenseTypeDto ExpenseType { get; set; } = null!;
+
 }
 
 public class BudgetCreateDto
@@ -26,9 +28,9 @@ public class BudgetCreateDto
 public class BudgetUpdateDto
 {
     public long Id { get; set; }
-    public int ExpenseTypeId { get; set; }
-    public DateOnly Month { get; set; }
-    public decimal Amount { get; set; }
+    public int? ExpenseTypeId { get; set; }
+    public DateOnly? Month { get; set; }
+    public decimal? Amount { get; set; }
 }
 
 
