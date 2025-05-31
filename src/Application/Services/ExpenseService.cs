@@ -8,11 +8,14 @@ public class ExpenseService : IExpenseService
 {
     private readonly IExpenseRepository _repository;
     private readonly IBudgetRepository _budgetRepository;
+    private readonly IExpenseTypeRepository _expenseTypeRepository;
 
-    public ExpenseService(IExpenseRepository repository, IBudgetRepository budgetRepository)
+    public ExpenseService(IExpenseRepository repository, IBudgetRepository budgetRepository, IExpenseTypeRepository expenseTypeRepository)
     {
         _repository = repository;
         _budgetRepository = budgetRepository;
+        _expenseTypeRepository = expenseTypeRepository;
+
     }
 
     public async Task<ExpenseDto> CreateAsync(long userId, ExpenseCreateDto dto)
@@ -36,6 +39,9 @@ public class ExpenseService : IExpenseService
             Amount = d.Amount,
         }).ToList();
 
+        var expenseTypeIds = details.Select(d => d.ExpenseTypeId).Distinct().ToList();
+        var expenseTypes = await _expenseTypeRepository.GetByIdsAsync(expenseTypeIds);
+
         await _repository.AddAsync(header, details);
 
         return new ExpenseDto
@@ -58,7 +64,14 @@ public class ExpenseService : IExpenseService
                 Amount = d.Amount,
                 CreatedAt = d.CreatedAt,
                 UpdatedAt = d.UpdatedAt,
-                DeletedAt = d.DeletedAt
+                DeletedAt = d.DeletedAt,
+                ExpenseType = new ExpenseTypeDto
+                {
+                    Id = expenseTypes[d.ExpenseTypeId].Id,
+                    Name = expenseTypes[d.ExpenseTypeId].Name,
+                    Code = expenseTypes[d.ExpenseTypeId].Code,
+                    Description = expenseTypes[d.ExpenseTypeId].Description,
+                }
             }).ToList()
         };
     }

@@ -49,4 +49,12 @@ public class ExpenseTypeRepository : IExpenseTypeRepository
 
         return $"ET-{nextNumber:D4}";
     }
+
+    public async Task<Dictionary<int, ExpenseType>> GetByIdsAsync(IEnumerable<int> ids)
+    {
+        return await _context.ExpenseType
+            .Where(et => ids.Contains(et.Id))
+            .ToDictionaryAsync(et => et.Id);
+    }
+
 }
