@@ -3,7 +3,7 @@ using ExpenseControlApi.Application.DTOs;
 
 namespace ExpenseControlApi.Application.Interfaces;
 
-public interface IExpenseHeaderService
+public interface IExpenseService
 {
     // Task<List<ExpenseHeaderDto>> GetAllAsync();
     // Task<ExpenseHeaderDto?> GetByIdAsync(long id);

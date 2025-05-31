@@ -1,4 +1,4 @@
-// Archivo: src/Application/Services/ExpenseHeaderService.cs
+// Archivo: src/Application/Services/ExpenseService.cs
 // Requiere: ExpenseHeaderDto, ExpenseHeaderCreateDto, ExpenseHeaderUpdateDto en Application/DTOs
 using ExpenseControlApi.Application.DTOs;
 // using ExpenseControlApi.Application.Interfaces.Repositories;
@@ -8,11 +8,11 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Services;
 
-public class ExpenseHeaderService // : IExpenseHeaderService
+public class ExpenseService // : IExpenseService
 {
     private readonly IExpenseHeaderRepository _repository;
 
-    public ExpenseHeaderService(IExpenseHeaderRepository repository)
+    public ExpenseService(IExpenseHeaderRepository repository)
     {
         _repository = repository;
     }

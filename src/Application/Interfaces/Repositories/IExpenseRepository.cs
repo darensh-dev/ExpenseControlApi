@@ -2,7 +2,7 @@ using ExpenseControlApi.Domain.Entities;
 
 namespace ExpenseControlApi.Application.Interfaces;
 
-public interface IExpenseHeaderRepository
+public interface IExpenseRepository
 {
     Task AddAsync(ExpenseHeader entity);
     Task<ExpenseHeader?> GetByIdAsync(long id);
