@@ -92,7 +92,17 @@ public class MonetaryFundService : IMonetaryFundService
         }
 
         if (dto.Name is not null) entity.Name = dto.Name;
-        if (dto.FundTypeId.HasValue) entity.FundTypeId = dto.FundTypeId.Value;
+        if (dto.FundTypeId.HasValue)
+        {
+
+            var fundType = await _fundTypeRepository.GetByIdAsync(dto.FundTypeId);
+            if (fundType is null)
+            {
+                throw new NotFoundException($"FundType with ID {dto.FundTypeId} not found.");
+            }
+            entity.FundTypeId = dto.FundTypeId.Value;
+        }
+        ;
         if (dto.InitialBalance.HasValue) entity.InitialBalance = dto.InitialBalance.Value;
 
         entity.UpdatedAt = DateTime.UtcNow;
