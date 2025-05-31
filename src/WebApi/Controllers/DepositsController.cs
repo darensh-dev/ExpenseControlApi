@@ -6,6 +6,7 @@ using ExpenseControlApi.Application.DTOs;
 
 namespace ExpenseControlApi.WebApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/deposit")]
 public class DepositsController : ControllerBase
@@ -45,7 +46,7 @@ public class DepositsController : ControllerBase
         var fund = await _depositService.GetByIdAsync(id, userId);
         if (fund == null)
         {
-            return NotFound(new { message = "Monetary fund not found" });
+            return NotFound(new { message = "Deposit fund not found" });
         }
 
         return Ok(fund);

@@ -40,16 +40,9 @@ public class DepositRepository : IDepositRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(long id, long userId)
+    public async Task DeleteAsync(Deposit entity)
     {
-        var deposit = await _context.Deposit
-            .Where(d => d.Id == id && d.UserId == userId && d.DeletedAt == null)
-            .FirstOrDefaultAsync();
-
-        if (deposit != null)
-        {
-            deposit.DeletedAt = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
-        }
+        _context.Deposit.Update(entity);
+        await _context.SaveChangesAsync();
     }
 }
