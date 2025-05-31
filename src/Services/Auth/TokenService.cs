@@ -19,7 +19,7 @@ public class TokenService
 
     public (string token, DateTime expiresAt) GenerateToken(User user)
     {
-        var expiresAt = DateTime.UtcNow.AddHours(2);
+        var expiresAt = DateTime.UtcNow.AddHours(8);
 
         var claims = new[]
         {
