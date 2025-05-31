@@ -8,10 +8,13 @@ namespace ExpenseControlApi.Application.Services;
 public class MonetaryFundService : IMonetaryFundService
 {
     private readonly IMonetaryFundRepository _repository;
+    private readonly IFundTypeRepository _fundTypeRepository;
 
-    public MonetaryFundService(IMonetaryFundRepository repository)
+    public MonetaryFundService(IMonetaryFundRepository repository, IFundTypeRepository fundTypeRepository)
     {
         _repository = repository;
+        _fundTypeRepository = fundTypeRepository;
+
     }
 
     public async Task<List<MonetaryFundDto>> GetAllAsync(long userId)
@@ -94,15 +97,14 @@ public class MonetaryFundService : IMonetaryFundService
         if (dto.Name is not null) entity.Name = dto.Name;
         if (dto.FundTypeId.HasValue)
         {
-
-            var fundType = await _fundTypeRepository.GetByIdAsync(dto.FundTypeId);
+            var fundType = await _fundTypeRepository.GetByIdAsync(dto.FundTypeId.Value, userId);
             if (fundType is null)
             {
-                throw new NotFoundException($"FundType with ID {dto.FundTypeId} not found.");
+                throw new Exception($"FundType with ID {dto.FundTypeId} not found.");
             }
             entity.FundTypeId = dto.FundTypeId.Value;
         }
-        ;
+
         if (dto.InitialBalance.HasValue) entity.InitialBalance = dto.InitialBalance.Value;
 
         entity.UpdatedAt = DateTime.UtcNow;

@@ -1,4 +1,4 @@
-// Archivo: src/Infrastructure/Repositories/FundTypeRepository.cs
+// src/Infrastructure/Repositories/FundTypeRepository.cs
 using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
 using ExpenseControlApi.Infrastructure.Data;
@@ -14,6 +14,18 @@ public class FundTypeRepository : IFundTypeRepository
     {
         _context = context;
     }
+
+    public async Task<FundType?> GetByIdAsync(int id, long userId)
+    {
+        return await _context.FundType
+            .Where(
+                dt => dt.DeletedAt == null &&
+                dt.Id == id &&
+                (dt.CreatedByUserId == null || dt.CreatedByUserId == userId)
+            )
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<FundType>> GetAllAsync(long userId)
     {
         return await _context.FundType
