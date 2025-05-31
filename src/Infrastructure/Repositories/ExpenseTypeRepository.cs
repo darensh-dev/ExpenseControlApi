@@ -18,8 +18,13 @@ public class ExpenseTypeRepository : IExpenseTypeRepository
     public async Task<List<ExpenseType>> GetAllAsync(long userId)
     {
         return await _context.ExpenseType
-            .Where(dt => dt.DeletedAt == null &&
-                        (dt.CreatedByUserId == null || dt.CreatedByUserId == userId))
+            .Where(
+                dt => dt.DeletedAt == null &&
+                (
+                    dt.CreatedByUserId == null
+                    || dt.CreatedByUserId == userId
+                )
+            )
             .ToListAsync();
     }
 

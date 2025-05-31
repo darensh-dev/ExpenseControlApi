@@ -30,10 +30,11 @@ public class ExpenseRepository : IExpenseRepository
             .Include(e => e.MonetaryFund)
             .Include(e => e.DocumentType)
             .Include(e => e.ExpenseDetails).ThenInclude(d => d.ExpenseType)
-            .Where(e => e.UserId == userId &&
-                        e.Date.Year == year &&
-                        e.Date.Month == month &&
-                        e.DeletedAt == null)
+            .Where(
+                e => e.UserId == userId &&
+                e.Date.Year == year &&
+                e.Date.Month == month &&
+                e.DeletedAt == null)
             .ToListAsync();
     }
 
@@ -65,11 +66,12 @@ public class ExpenseRepository : IExpenseRepository
     public async Task<decimal> GetTotalSpentByTypeInMonthAsync(int expenseTypeId, long userId, DateOnly month)
     {
         return await _context.ExpenseDetail
-            .Where(d => d.ExpenseTypeId == expenseTypeId &
-                        d.ExpenseHeader.UserId == userId &&
-                        d.ExpenseHeader.Date.Year == month.Year &&
-                        d.ExpenseHeader.Date.Month == month.Month &&
-                        d.ExpenseHeader.DeletedAt == null)
+            .Where(
+                d => d.ExpenseTypeId == expenseTypeId &
+                d.ExpenseHeader.UserId == userId &&
+                d.ExpenseHeader.Date.Year == month.Year &&
+                d.ExpenseHeader.Date.Month == month.Month &&
+                d.ExpenseHeader.DeletedAt == null)
             .SumAsync(d => (decimal?)d.Amount) ?? 0;
     }
 }

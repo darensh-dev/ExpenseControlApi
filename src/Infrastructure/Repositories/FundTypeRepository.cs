@@ -29,8 +29,13 @@ public class FundTypeRepository : IFundTypeRepository
     public async Task<List<FundType>> GetAllAsync(long userId)
     {
         return await _context.FundType
-            .Where(dt => dt.DeletedAt == null &&
-                        (dt.CreatedByUserId == null || dt.CreatedByUserId == userId))
+            .Where(
+                dt => dt.DeletedAt == null &&
+                (
+                    dt.CreatedByUserId == null
+                    || dt.CreatedByUserId == userId
+                )
+            )
             .ToListAsync();
     }
 

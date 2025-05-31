@@ -18,8 +18,13 @@ public class DocumentTypeRepository : IDocumentTypeRepository
     public async Task<List<DocumentType>> GetAllAsync(long currentUserId)
     {
         return await _context.DocumentType
-            .Where(dt => dt.DeletedAt == null &&
-                        (dt.CreatedByUserId == null || dt.CreatedByUserId == currentUserId))
+            .Where(
+                dt => dt.DeletedAt == null &&
+                (
+                    dt.CreatedByUserId == null
+                    || dt.CreatedByUserId == currentUserId
+                )
+            )
             .ToListAsync();
     }
 }

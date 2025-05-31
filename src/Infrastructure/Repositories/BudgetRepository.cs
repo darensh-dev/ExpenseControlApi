@@ -24,7 +24,10 @@ public class BudgetRepository : IBudgetRepository
     public async Task<Budget?> GetByIdAsync(long id, long userId)
     {
         return await _context.Budget
-            .Where(d => d.Id == id && d.DeletedAt == null && d.UserId == userId)
+            .Where(
+                d => d.Id == id &&
+                d.DeletedAt == null &&
+                d.UserId == userId)
             .FirstOrDefaultAsync();
     }
 
@@ -39,11 +42,12 @@ public class BudgetRepository : IBudgetRepository
     {
         return await _context.Budget
             .Include(b => b.ExpenseType)
-            .Where(b => b.ExpenseTypeId == expenseTypeId &&
-                        b.Month.Year == month.Year &&
-                        b.Month.Month == month.Month &&
-                        b.DeletedAt == null &&
-                        b.UserId == userId)
+            .Where(
+                b => b.ExpenseTypeId == expenseTypeId &&
+                b.Month.Year == month.Year &&
+                b.Month.Month == month.Month &&
+                b.DeletedAt == null &&
+                b.UserId == userId)
             .FirstOrDefaultAsync();
     }
 
