@@ -7,7 +7,6 @@ namespace ExpenseControlApi.Application.DTOs;
 public class BudgetDto
 {
     public long Id { get; set; }
-    public long UserId { get; set; }
     public int ExpenseTypeId { get; set; }
     public DateOnly Month { get; set; }
     public decimal Amount { get; set; }

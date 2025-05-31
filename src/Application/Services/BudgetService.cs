@@ -20,7 +20,6 @@ public class BudgetService : IBudgetService
         return budget.Select(e => new BudgetDto
         {
             Id = e.Id,
-            UserId = e.UserId,
             ExpenseTypeId = e.ExpenseTypeId,
             Month = e.Month,
             Amount = e.Amount,
@@ -37,7 +36,6 @@ public class BudgetService : IBudgetService
         return new BudgetDto
         {
             Id = entity.Id,
-            UserId = entity.UserId,
             ExpenseTypeId = entity.ExpenseTypeId,
             Month = entity.Month,
             Amount = entity.Amount,
@@ -54,12 +52,12 @@ public class BudgetService : IBudgetService
             ExpenseTypeId = dto.ExpenseTypeId,
             Month = dto.Month,
             Amount = dto.Amount,
+            UserId = userId,
         };
         await _repository.AddAsync(entity);
         return new BudgetDto
         {
             Id = entity.Id,
-            UserId = entity.UserId,
             ExpenseTypeId = entity.ExpenseTypeId,
             Month = entity.Month,
             Amount = entity.Amount,
@@ -81,7 +79,6 @@ public class BudgetService : IBudgetService
         return new BudgetDto
         {
             Id = entity.Id,
-            UserId = entity.UserId,
             ExpenseTypeId = entity.ExpenseTypeId,
             Month = entity.Month,
             Amount = entity.Amount,
