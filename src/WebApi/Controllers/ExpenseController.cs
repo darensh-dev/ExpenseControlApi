@@ -57,6 +57,10 @@ public class ExpenseController : ControllerBase
         {
             return BadRequest("Invalid user ID in token");
         }
+        if (dto.Details == null || dto.Details.Count == 0)
+        {
+            throw new ArgumentException("At least one expense detail is required.");
+        }
         var created = await _expenseService.CreateAsync(userId, dto);
         return CreatedAtAction(nameof(GetById), new { id = created.Id, userId = created.UserId }, created);
     }

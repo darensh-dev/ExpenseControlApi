@@ -35,6 +35,17 @@ public class BudgetRepository : IBudgetRepository
             .ToListAsync();
     }
 
+    public async Task<Budget?> GetByTypeAndMonthAsync(int expenseTypeId, long userId, DateOnly month)
+    {
+        return await _context.Budget
+            .Where(b => b.ExpenseTypeId == expenseTypeId &&
+                        b.Month.Year == month.Year &&
+                        b.Month.Month == month.Month &&
+                        b.DeletedAt == null &&
+                        b.UserId == userId)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task UpdateAsync(Budget entity)
     {
         _context.Budget.Update(entity);

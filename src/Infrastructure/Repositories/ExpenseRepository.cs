@@ -57,4 +57,16 @@ public class ExpenseRepository : IExpenseRepository
             throw;
         }
     }
+
+    public async Task<decimal> GetTotalSpentByTypeInMonthAsync(int expenseTypeId, long userId, DateOnly month)
+    {
+        return await _context.ExpenseDetail
+            .Where(d => d.ExpenseTypeId == expenseTypeId &&
+                        d.DeletedAt == null &&
+                        d.ExpenseHeader.UserId == userId &&
+                        d.ExpenseHeader.Date.Year == month.Year &&
+                        d.ExpenseHeader.Date.Month == month.Month &&
+                        d.ExpenseHeader.DeletedAt == null)
+            .SumAsync(d => (decimal?)d.Amount) ?? 0;
+    }
 }

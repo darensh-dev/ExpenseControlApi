@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using ExpenseControlApi.Application.DTOs;
 using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
@@ -5,14 +6,18 @@ using ExpenseControlApi.Domain.Entities;
 public class ExpenseService : IExpenseService
 {
     private readonly IExpenseRepository _repository;
+    private readonly IBudgetRepository _budgetRepository;
 
-    public ExpenseService(IExpenseRepository repository)
+    public ExpenseService(IExpenseRepository repository, IBudgetRepository budgetRepository)
     {
         _repository = repository;
+        _budgetRepository = budgetRepository;
     }
 
     public async Task<ExpenseDto> CreateAsync(long userId, ExpenseCreateDto dto)
     {
+        await ValidateBudgetAsync(dto.Details, dto.Date, userId);
+
         var header = new ExpenseHeader
         {
             UserId = userId,
@@ -22,14 +27,12 @@ public class ExpenseService : IExpenseService
             DocumentTypeId = dto.DocumentTypeId,
             OtherDocumentTypeText = dto.OtherDocumentTypeText,
             Notes = dto.Notes,
-            CreatedAt = DateTime.UtcNow
         };
 
         var details = dto.Details.Select(d => new ExpenseDetail
         {
             ExpenseTypeId = d.ExpenseTypeId,
             Amount = d.Amount,
-            CreatedAt = DateTime.UtcNow
         }).ToList();
 
         await _repository.AddAsync(header, details);
@@ -45,13 +48,17 @@ public class ExpenseService : IExpenseService
             OtherDocumentTypeText = header.OtherDocumentTypeText,
             Notes = header.Notes,
             CreatedAt = header.CreatedAt,
+            UpdatedAt = header.UpdatedAt,
+            DeletedAt = header.DeletedAt,
             Details = details.Select(d => new ExpenseDetailDto
             {
                 Id = d.Id,
                 ExpenseHeaderId = d.ExpenseHeaderId,
                 ExpenseTypeId = d.ExpenseTypeId,
                 Amount = d.Amount,
-                CreatedAt = d.CreatedAt
+                CreatedAt = d.CreatedAt,
+                UpdatedAt = d.UpdatedAt,
+                DeletedAt = d.DeletedAt
             }).ToList()
         };
     }
@@ -115,5 +122,22 @@ public class ExpenseService : IExpenseService
                 DeletedAt = d.DeletedAt
             }).ToList()
         }).ToList();
+    }
+
+    private async Task ValidateBudgetAsync(List<ExpenseDetailCreateDto> details, DateOnly month, long userId)
+    {
+        foreach (var detail in details)
+        {
+            var budget = await _budgetRepository.GetByTypeAndMonthAsync(detail.ExpenseTypeId, userId, month);
+            if (budget == null) continue;
+
+            var totalSpent = await _repository.GetTotalSpentByTypeInMonthAsync(detail.ExpenseTypeId, userId, month);
+
+            var projected = totalSpent + detail.Amount;
+            if (projected > budget.Amount)
+            {
+                throw new ValidationException($"Overspent for type {detail.ExpenseTypeId}: Budget={budget.Amount}, Projected={projected}");
+            }
+        }
     }
 }
