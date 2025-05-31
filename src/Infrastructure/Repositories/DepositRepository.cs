@@ -40,7 +40,7 @@ public class DepositRepository : IDepositRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Deposit entity)
+    public async Task UpdateAsync(Deposit entity)
     {
         _context.Deposit.Update(entity);
         await _context.SaveChangesAsync();

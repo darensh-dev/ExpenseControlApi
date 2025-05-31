@@ -7,5 +7,5 @@ public interface IDepositRepository
     Task<Deposit?> GetByIdAsync(long id, long userId);
     Task<List<Deposit>> GetByDateAsync(long userId, long year, long month);
     Task AddAsync(Deposit entity);
-    Task DeleteAsync(Deposit entity);
+    Task UpdateAsync(Deposit entity);
 }

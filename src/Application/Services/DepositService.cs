@@ -79,6 +79,6 @@ public class DepositService : IDepositService
             throw new Exception("Deposit not found or access denied.");
         }
         entity.DeletedAt = DateTime.UtcNow;
-        await _repository.DeleteAsync(entity);
+        await _repository.UpdateAsync(entity);
     }
 }
