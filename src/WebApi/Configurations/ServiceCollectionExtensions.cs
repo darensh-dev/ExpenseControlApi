@@ -17,16 +17,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IDocumentTypeService, DocumentTypeService>();
         services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
-        // services.AddScoped<ExpenseService>();
-        // ...
+        services.AddScoped<IFundTypeService, FundTypeService>();
 
         // Repositorios
         services.AddScoped<ILoginLogRepository, LoginLogRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IDocumentTypeRepository, DocumentTypeRepository>();
         services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
-        // services.AddScoped<IExpenseRepository, ExpenseRepository>();
-        // ...
+        services.AddScoped<IFundTypeRepository, FundTypeRepository>();
 
         return services;
     }

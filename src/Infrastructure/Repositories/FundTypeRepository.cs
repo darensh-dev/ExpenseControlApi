@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
-public class FundTypeRepository // : IFundTypeRepository
+public class FundTypeRepository : IFundTypeRepository
 {
     private readonly AppDbContext _context;
 
@@ -14,6 +14,17 @@ public class FundTypeRepository // : IFundTypeRepository
     {
         _context = context;
     }
+    public async Task<List<FundType>> GetAllAsync(long userId)
+    {
+        return await _context.FundType
+            .Where(dt => dt.DeletedAt == null &&
+                        (dt.CreatedByUserId == null || dt.CreatedByUserId == userId))
+            .ToListAsync();
+    }
 
-    // Métodos CRUD aquí (implementación pendiente)
+    public async Task AddAsync(FundType entity)
+    {
+        _context.FundType.Add(entity);
+        await _context.SaveChangesAsync();
+    }
 }

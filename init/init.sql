@@ -185,8 +185,6 @@ CREATE TABLE
     );
 
 GO
-alter table dbo.expense_types
-alter column code nvarchar (10) null go
 INSERT INTO
     expense_control.dbo.users (username, password)
 VALUES
