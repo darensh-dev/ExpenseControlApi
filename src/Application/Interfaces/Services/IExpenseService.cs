@@ -1,4 +1,3 @@
-// Requiere: ExpenseHeaderDto, ExpenseHeaderCreateDto, ExpenseHeaderUpdateDto en Application/DTOs
 using ExpenseControlApi.Application.DTOs;
 
 namespace ExpenseControlApi.Application.Interfaces;
