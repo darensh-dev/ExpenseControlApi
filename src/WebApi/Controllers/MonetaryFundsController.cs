@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseControlApi.WebApi.Controllers;
 
 [ApiController]
-[Route("api/v1/monetaryfunds")]
+[Route("api/v1/monetary-fund")]
 public class MonetaryFundsController : ControllerBase
 {
     private readonly IMonetaryFundService _monetaryFundService;
