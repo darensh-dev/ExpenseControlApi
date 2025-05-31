@@ -17,14 +17,15 @@ public class MonetaryFundService : IMonetaryFundService
     public async Task<List<MonetaryFundDto>> GetAllAsync(long userId)
     {
         var MonetaryFund = await _repository.GetAllAsync(userId);
-        return MonetaryFund.Select(exp => new MonetaryFundDto
+        return MonetaryFund.Select(mf => new MonetaryFundDto
         {
-            Id = exp.Id,
-            Name = exp.Name,
-            InitialBalance = exp.InitialBalance,
-            CreatedAt = exp.CreatedAt,
-            UpdatedAt = exp.UpdatedAt,
-            DeletedAt = exp.DeletedAt,
+            Id = mf.Id,
+            Name = mf.Name,
+            FundTypeId = mf.FundTypeId,
+            InitialBalance = mf.InitialBalance,
+            CreatedAt = mf.CreatedAt,
+            UpdatedAt = mf.UpdatedAt,
+            DeletedAt = mf.DeletedAt,
         }).ToList();
     }
 
@@ -34,6 +35,7 @@ public class MonetaryFundService : IMonetaryFundService
         {
             Name = dto.Name,
             InitialBalance = dto.InitialBalance,
+            FundTypeId = dto.FundTypeId,
             UserId = userId,
         };
 
@@ -43,6 +45,7 @@ public class MonetaryFundService : IMonetaryFundService
         {
             Id = entity.Id,
             Name = entity.Name,
+            FundTypeId = entity.FundTypeId,
             InitialBalance = entity.InitialBalance,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
@@ -70,6 +73,7 @@ public class MonetaryFundService : IMonetaryFundService
         {
             Id = entity.Id,
             Name = entity.Name,
+            FundTypeId = entity.FundTypeId,
             InitialBalance = entity.InitialBalance,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,

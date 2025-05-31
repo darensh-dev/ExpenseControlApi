@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
-public class MonetaryFundRepository // : IMonetaryFundRepository
+public class MonetaryFundRepository : IMonetaryFundRepository
 {
     private readonly AppDbContext _context;
 
@@ -15,5 +15,28 @@ public class MonetaryFundRepository // : IMonetaryFundRepository
         _context = context;
     }
 
-    // Métodos CRUD aquí (implementación pendiente)
+    public async Task<MonetaryFund?> GetByIdAsync(long id)
+    {
+        return await _context.MonetaryFund
+            .FirstOrDefaultAsync(mf => mf.Id == id && mf.DeletedAt == null);
+    }
+
+    public async Task<List<MonetaryFund>> GetAllAsync(long userId)
+    {
+        return await _context.MonetaryFund
+            .Where(mf => mf.DeletedAt == null && mf.UserId == userId)
+            .ToListAsync();
+    }
+
+    public async Task AddAsync(MonetaryFund entity)
+    {
+        _context.MonetaryFund.Add(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(MonetaryFund entity)
+    {
+        _context.MonetaryFund.Update(entity);
+        await _context.SaveChangesAsync();
+    }
 }
