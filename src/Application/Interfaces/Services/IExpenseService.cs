@@ -5,9 +5,7 @@ namespace ExpenseControlApi.Application.Interfaces;
 
 public interface IExpenseService
 {
-    // Task<List<ExpenseHeaderDto>> GetAllAsync();
-    // Task<ExpenseHeaderDto?> GetByIdAsync(long id);
-    // Task AddAsync(ExpenseHeaderCreateDto dto);
-    // Task UpdateAsync(long id, ExpenseHeaderUpdateDto dto);
-    // Task DeleteAsync(long id);
+    Task<ExpenseDto?> GetByIdAsync(long id, long userId);
+    Task<List<ExpenseDto>> GetByDateAsync(long userId, int year, int month);
+    Task<ExpenseDto> CreateAsync(long userId, ExpenseCreateDto dto);
 }

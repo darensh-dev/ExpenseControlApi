@@ -4,30 +4,30 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseControlApi.Application.DTOs;
 
-public class BudgetDto
+public class ExpenseDetailDto
 {
     public long Id { get; set; }
+    public long ExpenseHeaderId { get; set; }
     public int ExpenseTypeId { get; set; }
-    public DateOnly Month { get; set; }
     public decimal Amount { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
 }
 
-public class BudgetCreateDto
+public class ExpenseDetailCreateDto
 {
+    public long ExpenseHeaderId { get; set; }
     public int ExpenseTypeId { get; set; }
-    public DateOnly Month { get; set; }
     public decimal Amount { get; set; }
 
 }
 
-public class BudgetUpdateDto
+public class ExpenseDetailUpdateDto
 {
     public long Id { get; set; }
+    public long ExpenseHeaderId { get; set; }
     public int ExpenseTypeId { get; set; }
-    public DateOnly Month { get; set; }
     public decimal Amount { get; set; }
 }
 

@@ -1,12 +1,9 @@
 using ExpenseControlApi.Domain.Entities;
-
 namespace ExpenseControlApi.Application.Interfaces;
 
 public interface IExpenseRepository
 {
-    Task AddAsync(ExpenseHeader entity);
-    Task<ExpenseHeader?> GetByIdAsync(long id);
-    Task<List<ExpenseHeader>> GetAllAsync();
-    Task UpdateAsync(ExpenseHeader entity);
-    Task DeleteAsync(long id);
+    Task<ExpenseHeader?> GetByIdAsync(long id, long userId);
+    Task<List<ExpenseHeader>> GetByDateAsync(long userId, int year, int month);
+    Task AddAsync(ExpenseHeader header, List<ExpenseDetail> details);
 }

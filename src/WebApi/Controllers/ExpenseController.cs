@@ -1,8 +1,13 @@
 using ExpenseControlApi.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ExpenseControlApi.Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
 
 namespace ExpenseControlApi.WebApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/expense")]
 public class ExpenseController : ControllerBase
@@ -14,10 +19,42 @@ public class ExpenseController : ControllerBase
         _expenseService = expenseService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpGet("{id:long}")]
+    public async Task<IActionResult> GetById(long id)
     {
-        var headers = await _expenseService.GetAllAsync();
-        return Ok(headers);
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!long.TryParse(userIdString, out var userId))
+        {
+            return BadRequest("Invalid user ID in token");
+        }
+        var result = await _expenseService.GetByIdAsync(id, userId);
+        if (result == null)
+            return NotFound();
+
+        return Ok(result);
+    }
+
+    [HttpGet("by-date")]
+    public async Task<IActionResult> GetByDate([FromQuery] int year, [FromQuery] int month)
+    {
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!long.TryParse(userIdString, out var userId))
+        {
+            return BadRequest("Invalid user ID in token");
+        }
+        var result = await _expenseService.GetByDateAsync(userId, year, month);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] ExpenseCreateDto dto)
+    {
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!long.TryParse(userIdString, out var userId))
+        {
+            return BadRequest("Invalid user ID in token");
+        }
+        var created = await _expenseService.CreateAsync(userId, dto);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id, userId = created.UserId }, created);
     }
 }
