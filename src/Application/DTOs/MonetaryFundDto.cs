@@ -16,7 +16,7 @@ public class MonetaryFundDto
 
 }
 
-public class MonetaryFundExpenseDto
+public class MonetaryFundChildDto
 {
     public long Id { get; set; }
     public string Name { get; set; } = null!;

@@ -19,18 +19,20 @@ public class DepositRepository : IDepositRepository
     public async Task<Deposit?> GetByIdAsync(long id, long userId)
     {
         return await _context.Deposit
-            .Where(d => d.Id == id && d.DeletedAt == null && d.UserId == userId)
+            .Include(e => e.MonetaryFund)
+            .Where(e => e.Id == id && e.DeletedAt == null && e.UserId == userId)
             .FirstOrDefaultAsync();
     }
 
     public async Task<List<Deposit>> GetByDateAsync(long userId, long year, long month)
     {
         return await _context.Deposit
-            .Where(d =>
-                d.DeletedAt == null &&
-                d.UserId == userId &&
-                d.Date.Year == year &&
-                d.Date.Month == month)
+            .Include(e => e.MonetaryFund)
+            .Where(e =>
+                e.DeletedAt == null &&
+                e.UserId == userId &&
+                e.Date.Year == year &&
+                e.Date.Month == month)
             .ToListAsync();
     }
 

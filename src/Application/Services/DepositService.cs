@@ -16,16 +16,20 @@ public class DepositService : IDepositService
 
     public async Task<List<DepositDto>> GetByDateAsync(long userId, long year, long month)
     {
-        var deposit = await _repository.GetByDateAsync(userId, year, month);
-        return [.. deposit.Select(dp => new DepositDto
+        var entity = await _repository.GetByDateAsync(userId, year, month);
+        return [.. entity.Select(dp => new DepositDto
         {
             Id = dp.Id,
             Date = dp.Date,
-            MonetaryFundId = dp.MonetaryFundId,
             Amount = dp.Amount,
             CreatedAt = dp.CreatedAt,
             UpdatedAt = dp.UpdatedAt,
             DeletedAt = dp.DeletedAt,
+            MonetaryFund = new MonetaryFundChildDto
+            {
+                Id = dp.MonetaryFund.Id,
+                Name = dp.MonetaryFund.Name
+            },
         })];
     }
 
@@ -40,11 +44,15 @@ public class DepositService : IDepositService
         {
             Id = entity.Id,
             Date = entity.Date,
-            MonetaryFundId = entity.MonetaryFundId,
             Amount = entity.Amount,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            MonetaryFund = new MonetaryFundChildDto
+            {
+                Id = entity.MonetaryFund.Id,
+                Name = entity.MonetaryFund.Name
+            },
         };
     }
 
@@ -59,16 +67,21 @@ public class DepositService : IDepositService
         };
 
         await _repository.AddAsync(entity);
-
+        var monetaryFund = await _repository.GetByIdAsync(dto.MonetaryFundId, userId);
+        if (monetaryFund is null) throw new Exception("Expense type not found");
         return new DepositDto
         {
             Id = entity.Id,
             Date = entity.Date,
-            MonetaryFundId = entity.MonetaryFundId,
             Amount = entity.Amount,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             DeletedAt = entity.DeletedAt,
+            MonetaryFund = new MonetaryFundChildDto
+            {
+                Id = monetaryFund.MonetaryFund.Id,
+                Name = monetaryFund.MonetaryFund.Name
+            },
         };
     }
     public async Task DeleteAsync(long id, long userId)

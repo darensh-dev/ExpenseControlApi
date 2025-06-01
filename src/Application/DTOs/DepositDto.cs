@@ -7,12 +7,14 @@ namespace ExpenseControlApi.Application.DTOs;
 public class DepositDto
 {
     public long Id { get; set; }
-    public long MonetaryFundId { get; set; }
     public DateOnly Date { get; set; }
     public decimal Amount { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+
+    public MonetaryFundChildDto MonetaryFund { get; set; } = new();
+
 }
 
 public class DepositGetDto

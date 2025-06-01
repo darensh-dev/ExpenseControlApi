@@ -55,7 +55,7 @@ public class ExpenseService : IExpenseService
             CreatedAt = _header.CreatedAt,
             UpdatedAt = _header.UpdatedAt,
             DeletedAt = _header.DeletedAt,
-            MonetaryFund = new MonetaryFundExpenseDto
+            MonetaryFund = new MonetaryFundChildDto
             {
                 Id = _header.MonetaryFund.Id,
                 Name = _header.MonetaryFund.Name
@@ -100,7 +100,7 @@ public class ExpenseService : IExpenseService
             CreatedAt = header.CreatedAt,
             UpdatedAt = header.UpdatedAt,
             DeletedAt = header.DeletedAt,
-            MonetaryFund = new MonetaryFundExpenseDto
+            MonetaryFund = new MonetaryFundChildDto
             {
                 Id = header.MonetaryFund.Id,
                 Name = header.MonetaryFund.Name
@@ -144,7 +144,7 @@ public class ExpenseService : IExpenseService
             CreatedAt = header.CreatedAt,
             UpdatedAt = header.UpdatedAt,
             DeletedAt = header.DeletedAt,
-            MonetaryFund = new MonetaryFundExpenseDto
+            MonetaryFund = new MonetaryFundChildDto
             {
                 Id = header.MonetaryFund.Id,
                 Name = header.MonetaryFund.Name

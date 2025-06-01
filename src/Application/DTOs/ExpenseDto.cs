@@ -16,7 +16,7 @@ public class ExpenseDto
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
     public DocumentTypeDto DocumentType { get; set; } = new();
-    public MonetaryFundExpenseDto MonetaryFund { get; set; } = new();
+    public MonetaryFundChildDto MonetaryFund { get; set; } = new();
     public List<ExpenseDetailDto> Details { get; set; } = new();
 }
 
