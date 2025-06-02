@@ -18,6 +18,7 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCors(options =>
 {
+    // TODO: pasar esto a una env
     options.AddPolicy("AllowRemote",
         builder => builder.WithOrigins(
             "http://localhost:5173",
