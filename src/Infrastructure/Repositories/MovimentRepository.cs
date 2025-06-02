@@ -21,24 +21,32 @@ public class MovementRepository : IMovementRepository
         DateTime endDateTime = dto.EndDate.ToDateTime(TimeOnly.MaxValue);
 
         var query = @"
-            SELECT 
+            SELECT
                 et.name AS ExpenseType,
-                ISNULL(SUM(b.amount), 0) AS BudgetedAmount,
-                ISNULL(SUM(ed.amount), 0) AS ExecutedAmount
+                ISNULL(b.total_budget, 0) AS BudgetedAmount,
+                ISNULL(e.total_executed, 0) AS ExecutedAmount
             FROM expense_types et
-            LEFT JOIN budgets b 
-                ON b.expense_type_id = et.id 
-                AND b.user_id = {2}
-                AND b.month >= {0} AND b.month <= {1}
-            LEFT JOIN expense_details ed 
-                ON ed.expense_type_id = et.id
-            LEFT JOIN expense_headers eh 
-                ON eh.id = ed.expense_header_id 
-                AND eh.user_id = {2}
+            LEFT JOIN (
+                SELECT
+                    expense_type_id,
+                    SUM(amount) AS total_budget
+                FROM budgets
+                WHERE user_id = {2}
+                AND month >= {0}
+                AND month <= {1}
+                GROUP BY expense_type_id
+            ) b ON b.expense_type_id = et.id
+            LEFT JOIN (
+                SELECT
+                    ed.expense_type_id,
+                    SUM(ed.amount) AS total_executed
+                FROM expense_details ed
+                INNER JOIN expense_headers eh ON eh.id = ed.expense_header_id
+                WHERE eh.user_id = {2}
                 AND eh.date BETWEEN {0} AND {1}
-            WHERE et.deleted_at IS NULL
-            GROUP BY et.name
-            ORDER BY et.name;";
+                GROUP BY ed.expense_type_id
+            ) e ON e.expense_type_id = et.id
+            WHERE et.deleted_at IS NULL;";
 
         return await _context
             .Set<BudgetExecutionDto>()
