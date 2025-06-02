@@ -3,6 +3,10 @@ using ExpenseControlApi.Infrastructure.DependencyInjection;
 using ExpenseControlApi.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000);
+});
 
 // Add services
 builder.Services.AddControllers();
@@ -18,7 +22,8 @@ builder.Services.AddCors(options =>
         builder => builder.WithOrigins("http://localhost:5173")
                           .AllowAnyMethod()
                           .AllowAnyHeader()
-                          .AllowCredentials());
+                          .AllowCredentials()
+                          );
 });
 
 var app = builder.Build();
@@ -32,10 +37,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ApiExceptionHandlingMiddleware>();
 
-app.UseHttpsRedirection();
+app.UseCors("AllowLocalhost5173");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors("AllowLocalhost5173");
+app.UseHttpsRedirection();
 
 app.MapControllers();
 

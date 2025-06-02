@@ -17,6 +17,14 @@ public class DepositDto
 
 }
 
+
+public class DepositCreateDto
+{
+    public long MonetaryFundId { get; set; }
+    public DateOnly Date { get; set; }
+    public decimal Amount { get; set; }
+}
+
 public class DepositGetDto
 {
     [Required(ErrorMessage = "El campo 'Year' es obligatorio.")]
@@ -26,11 +34,3 @@ public class DepositGetDto
     [Range(1, 12, ErrorMessage = "El mes debe estar entre 1 y 12.")]
     public long Month { get; set; }
 }
-
-public class DepositCreateDto
-{
-    public long MonetaryFundId { get; set; }
-    public DateOnly Date { get; set; }
-    public decimal Amount { get; set; }
-}
-
