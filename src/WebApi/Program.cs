@@ -19,11 +19,13 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost5173",
-        builder => builder.WithOrigins("https://expense-control-frontend-gqvires17-darens-projects-8738ee1d.vercel.app")
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials()
-                          );
+        builder => builder.WithOrigins([
+                "https://expense-control-frontend-gqvires17-darens-projects-8738ee1d.vercel.app",
+                "https://expense-control-frontend-five.vercel.app/"
+            ]).AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            );
 });
 
 var app = builder.Build();
