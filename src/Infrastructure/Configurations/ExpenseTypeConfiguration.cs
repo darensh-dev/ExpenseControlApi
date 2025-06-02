@@ -13,7 +13,7 @@ public class ExpenseTypeConfiguration : IEntityTypeConfiguration<ExpenseType>
 
         entity.ToTable("expense_types");
 
-        entity.HasIndex(e => e.Code, "expense_types__code_uq").IsUnique();
+        // entity.HasIndex(e => e.Code, "expense_types__created_by_user_id_code_uq").IsUnique();
 
         entity.Property(e => e.Id).HasColumnName("id");
         entity.Property(e => e.Code)
