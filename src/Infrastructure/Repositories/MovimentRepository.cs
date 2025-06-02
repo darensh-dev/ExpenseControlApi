@@ -46,7 +46,7 @@ public class MovementRepository : IMovementRepository
                 AND eh.date BETWEEN {0} AND {1}
                 GROUP BY ed.expense_type_id
             ) e ON e.expense_type_id = et.id
-            WHERE et.deleted_at IS NULL;";
+            WHERE et.deleted_at IS NULL AND ed.amount IS NOT NULL;";
 
         return await _context
             .Set<BudgetExecutionDto>()

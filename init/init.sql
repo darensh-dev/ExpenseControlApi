@@ -69,7 +69,7 @@ CREATE TABLE
         updated_at DATETIME,
         deleted_at DATETIME,
         CONSTRAINT expense_types__pk PRIMARY KEY (id),
-        CONSTRAINT expense_types__code_uq UNIQUE (code),
+        CONSTRAINT expense_types__created_by_user_id_code_uq UNIQUE (created_by_user_id, code),
         CONSTRAINT fk_expense_types__created_by_user FOREIGN KEY (created_by_user_id) REFERENCES dbo.users (id)
     );
 
