@@ -186,7 +186,7 @@ CREATE TABLE
 
 GO
 INSERT INTO
-    expense_control.dbo.users (username, password)
+    users (username, password)
 VALUES
     (
         N'admin',
