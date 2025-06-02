@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowRemote",
         builder => builder.WithOrigins(
+            "http://localhost:5173",
             "https://expense-control-frontend-five.vercel.app",
             "https://expense-control-frontend-gqvires17-darens-projects-8738ee1d.vercel.app"
         ).AllowAnyMethod()
