@@ -23,8 +23,8 @@ public class MovementRepository : IMovementRepository
         var query = @"
             SELECT
                 et.name AS ExpenseType,
-                COALESCE(b.amount, 0) AS BudgetedAmount,
-                COALESCE(ed.amount, 0) AS ExecutedAmount
+                COALESCE(sum(b.amount), 0) AS BudgetedAmount,
+                COALESCE(sum(ed.amount), 0) AS ExecutedAmount
             FROM expense_types et
             JOIN budgets b
                 ON b.expense_type_id = et.id
@@ -36,7 +36,8 @@ public class MovementRepository : IMovementRepository
                 ON eh.id = ed.expense_header_id
                 -- AND eh.user_id = {2}
                 AND eh.date BETWEEN {0} AND {1}
-            WHERE et.deleted_at IS NULL AND et.created_by_user_id = {2};";
+            WHERE et.deleted_at IS NULL AND et.created_by_user_id = {2}
+            group by  et.name;";
 
         return await _context
             .Set<BudgetExecutionDto>()
