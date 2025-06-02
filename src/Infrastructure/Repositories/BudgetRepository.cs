@@ -3,6 +3,7 @@ using ExpenseControlApi.Application.Interfaces;
 using ExpenseControlApi.Domain.Entities;
 using ExpenseControlApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using ExpenseControlApi.Application.DTOs;
 
 namespace ExpenseControlApi.Infrastructure.Repositories;
 
@@ -40,17 +41,28 @@ public class BudgetRepository : IBudgetRepository
             .ToListAsync();
     }
 
-    public async Task<Budget?> GetByTypeAndMonthAsync(int expenseTypeId, long userId, DateOnly month)
+    public async Task<BudgetSummaryDto> GetByTypeAndMonthAsync(int expenseTypeId, long userId, DateOnly month)
     {
-        return await _context.Budget
-            .Include(b => b.ExpenseType)
+        var total = await _context.Budget
             .Where(
                 b => b.ExpenseTypeId == expenseTypeId &&
-                b.Month.Year == month.Year &&
-                b.Month.Month == month.Month &&
-                b.DeletedAt == null &&
-                b.UserId == userId)
+                     b.Month.Year == month.Year &&
+                     b.Month.Month == month.Month &&
+                     b.DeletedAt == null &&
+                     b.UserId == userId)
+            .SumAsync(b => (decimal?)b.Amount) ?? 0;
+
+        var expenseTypeName = await _context.ExpenseType
+            .Where(e => e.Id == expenseTypeId)
+            .Select(e => e.Name)
             .FirstOrDefaultAsync();
+
+        return new BudgetSummaryDto
+        {
+            Id = expenseTypeId,
+            ExpenseTypeName = expenseTypeName!,
+            TotalBudgeted = total
+        };
     }
 
     public async Task UpdateAsync(Budget entity)

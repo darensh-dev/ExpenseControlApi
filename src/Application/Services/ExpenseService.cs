@@ -183,9 +183,9 @@ public class ExpenseService : IExpenseService
             var totalSpent = await _repository.GetTotalSpentByTypeInMonthAsync(detail.ExpenseTypeId, userId, month);
 
             var projected = totalSpent + detail.Amount;
-            if (projected > budget.Amount)
+            if (projected > budget.TotalBudgeted)
             {
-                throw new BudgetExceededException(detail.ExpenseTypeId, budget.Amount, projected, budget.ExpenseType.Name);
+                throw new BudgetExceededException(detail.ExpenseTypeId, budget.TotalBudgeted, projected, budget.ExpenseTypeName);
             }
         }
     }

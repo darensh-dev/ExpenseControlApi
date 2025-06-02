@@ -25,6 +25,14 @@ public class BudgetCreateDto
 
 }
 
+public class BudgetSummaryDto
+{
+    public int Id { get; set; }
+    public string ExpenseTypeName { get; set; } = default!;
+    public decimal TotalBudgeted { get; set; }
+}
+
+
 public class BudgetUpdateDto
 {
     public long Id { get; set; }
