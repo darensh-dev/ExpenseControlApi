@@ -24,7 +24,7 @@ public class MovementRepository : IMovementRepository
             SELECT
                 et.name AS ExpenseType,
                 OALESCE(b.amount, 0) AS BudgetedAmount,
-                COALESCE(SUM(ed.amount), 0) AS ExecutedAmount
+                COALESCE(ed.amount, 0) AS ExecutedAmount
             FROM expense_types et
             JOIN budgets b
                 ON b.expense_type_id = et.id
