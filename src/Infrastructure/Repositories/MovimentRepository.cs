@@ -29,7 +29,7 @@ public class MovementRepository : IMovementRepository
             JOIN budgets b
                 ON b.expense_type_id = et.id
                 -- AND b.user_id = {2}
-                AND b.month >= {0}AND b.month <= {1}
+                AND b.month >= {0} AND b.month <= {1}
             LEFT JOIN expense_details ed
                 ON ed.expense_type_id = et.id
             LEFT JOIN expense_headers eh
