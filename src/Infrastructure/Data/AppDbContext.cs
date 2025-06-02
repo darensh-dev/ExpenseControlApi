@@ -24,5 +24,7 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        modelBuilder.Entity<ExpenseControlApi.Application.DTOs.BudgetExecutionDto>().HasNoKey();
+        modelBuilder.Entity<ExpenseControlApi.Application.DTOs.MovementDto>().HasNoKey();
     }
 }
