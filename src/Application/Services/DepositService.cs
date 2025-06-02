@@ -8,10 +8,11 @@ namespace ExpenseControlApi.Application.Services;
 public class DepositService : IDepositService
 {
     private readonly IDepositRepository _repository;
-
-    public DepositService(IDepositRepository repository)
+    private readonly IMonetaryFundRepository _monetaryFundRepository;
+    public DepositService(IDepositRepository repository, IMonetaryFundRepository monetaryFundRepository)
     {
         _repository = repository;
+        _monetaryFundRepository = monetaryFundRepository;
     }
 
     public async Task<List<DepositDto>> GetByDateAsync(long userId, long year, long month)
@@ -67,8 +68,8 @@ public class DepositService : IDepositService
         };
 
         await _repository.AddAsync(entity);
-        var monetaryFund = await _repository.GetByIdAsync(dto.MonetaryFundId, userId);
-        if (monetaryFund is null) throw new Exception("Expense type not found");
+        var monetaryFund = await _monetaryFundRepository.GetByIdAsync(dto.MonetaryFundId, userId);
+        if (monetaryFund is null) throw new Exception("Monetary Fund type not found");
         return new DepositDto
         {
             Id = entity.Id,
