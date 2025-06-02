@@ -32,7 +32,7 @@ public class MovementController : ControllerBase
     }
 
     [HttpGet]
-    [Route("movement")]
+    [Route("movements")]
     public async Task<IActionResult> GetAllMoviment([FromQuery] DateRangeFilterDto dto)
     {
         var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
