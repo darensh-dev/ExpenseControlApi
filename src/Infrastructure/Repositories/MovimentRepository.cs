@@ -23,7 +23,7 @@ public class MovementRepository : IMovementRepository
         var query = @"
             SELECT
                 et.name AS ExpenseType,
-                OALESCE(b.amount, 0) AS BudgetedAmount,
+                COALESCE(b.amount, 0) AS BudgetedAmount,
                 COALESCE(ed.amount, 0) AS ExecutedAmount
             FROM expense_types et
             JOIN budgets b
