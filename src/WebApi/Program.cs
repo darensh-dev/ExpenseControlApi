@@ -18,14 +18,14 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost5173",
-        builder => builder.WithOrigins([
-                "https://expense-control-frontend-gqvires17-darens-projects-8738ee1d.vercel.app",
-                "https://expense-control-frontend-five.vercel.app/"
-            ]).AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials()
-            );
+    options.AddPolicy("AllowRemote",
+        builder => builder.WithOrigins(
+            "https://expense-control-frontend-five.vercel.app",
+            "https://expense-control-frontend-gqvires17-darens-projects-8738ee1d.vercel.app"
+        ).AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        );
 });
 
 var app = builder.Build();
@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ApiExceptionHandlingMiddleware>();
 
-app.UseCors("AllowLocalhost5173");
+app.UseCors("AllowRemote");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
